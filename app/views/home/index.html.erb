@@ -1,9 +1,7 @@
-<%= request.location.city %>
-<%= request.location.address %>
-
-
-
-  <iframe src="//www.google.com/maps/embed/v1/place?q=<%= request.location.address %>
-      &zoom=11rails generate geocoder:config
-      &key=AIzaSyBUpsiuhohpq4JtD2rcNyap1iNpsmndPpg">
-  </iframe>
+<iframe
+  style="position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;"
+  src="//www.google.com/maps/embed/v1/place?q=<%= request.location.latitude %>,<%= request.location.longitude %>
+    &zoom=13
+    &key=AIzaSyBUpsiuhohpq4JtD2rcNyap1iNpsmndPpg">
+  Your browser doesn't support iframes
+</iframe>
