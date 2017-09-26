@@ -1,1 +1,9 @@
 <%= request.location.city %>
+<%= request.location.address %>
+
+
+
+  <iframe src="//www.google.com/maps/embed/v1/place?q=<%= request.location.address %>
+      &zoom=11rails generate geocoder:config
+      &key=AIzaSyBUpsiuhohpq4JtD2rcNyap1iNpsmndPpg">
+  </iframe>
