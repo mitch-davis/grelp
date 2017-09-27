@@ -1,3 +1,4 @@
+/*
 var handler;
 
 function CreateMaps(){
@@ -18,3 +19,4 @@ function displayOnMap(position){
 };
 
 $( document ).ready( CreateMaps );
+*/
