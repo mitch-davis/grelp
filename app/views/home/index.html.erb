@@ -14,20 +14,49 @@
 <script>
   
   var handler = Gmaps.build('Google');
-  var position = { lat: 104.8025, lng: 38.8943}; //Default User location is UCCS
+  var position;
   
-  handler.buildMap({ internal: {id: 'map'} }, function(){
-    // be aware chrome >= 50 requires https for geolocation to work
-    if(navigator.geolocation){
-      position = navigator.geolocation.getCurrentPosition();
+  handler.buildMap(
+    {
+      provider: {
+        disableDefaultUI: true, // pass in other Google Maps API options here
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        //styles: mapStyle
+      },
+      internal: {id: 'map'}
+    },
+  
+    function(){
+      if(navigator.geolocation) //If we can get their location, set their location
+      {
+        position = navigator.geolocation.getCurrentPosition(displayUserOnMap);
+      }
+      else // If we can't set their location, just simulate it
+      {
+        position = { lat: 38.8943, lng: 104.8025}; //Default User location is UCCS
+        displayUserOnMap(position)
+      }
+      
+      //Show UCCS and Zero
+      var markers = handler.addMarkers([ { lat: 38.904813, lng: -104.819010}, { lat: 0, lng: 0 } ]);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds(); 
     }
-    displayUserOnMap(position);
-    
-    //Show UCCS and Zero
-    var markers = handler.addMarkers([ { lat: 38.8943, lng: 104.8025}, { lat: 0, lng: 0 } ]);
-    //handler.bounds.extendWith(markers);
-    //handler.fitMapToBounds(); 
-  });
+  );
+  
+  function buildMarker(latitude, longitude, pictureUrl, InfoWindow)
+  {
+    var buildMarker = {
+      lat: latitude,
+      lng: longitude,
+      picture: {
+        url: pictureUrl,
+        width: 36,
+        height: 36
+      },
+      infowindow: InfoWindow
+    }
+  }
   
   function displayMarkerOnMap(position){
     var marker = handler.addMarkers([ {
