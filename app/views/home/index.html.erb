@@ -22,6 +22,8 @@
     dining: iconBase + 'dining.png',
     coffee: iconBase + 'coffee.png',
   };
+  var defaultUserPos = { lat: 38.905374, lng: -104.818371 }; // Default User location inside University Village
+  var searchRange = 10000; // Set how far to "search". Later, we can implement to change this by user input.
 
   handler.buildMap(
     {
@@ -39,11 +41,11 @@
       // Get user location
       if(navigator.geolocation) //If we can get their location, set their location
       {
-        navigator.geolocation.getCurrentPosition(displayUserOnMap);
+        navigator.geolocation.getCurrentPosition(displayUserOnMap, displayUserOnMap);
       }
       else // If we can't set their location, just simulate it
       {
-        displayUserOnMap( { lat: 38.905374, lng: -104.818371} ); //Default User location inside University Village
+        displayUserOnMap( defaultUserPos );
       }
       
       //Show Markers
@@ -87,33 +89,61 @@
   }
   
   function displayUserOnMap(position){
+    var lat, lng;
+    
     //Draw Person
-    var userPos = handler.addMarker({
-      lat: position.coords.latitude,
-      lng: position.coords.longitude,
-      picture: {
-        url: icons["person"],
-        width: 64,
-        height: 64
-      },
-    });
+    if(position.coords){ // If we got a location
+      var userPos = handler.addMarker({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+        picture: {
+          url: icons["person"],
+          width: 64,
+          height: 64
+        },
+      });
+      
+      lat = position.coords.latitude;
+      lng = position.coords.longitude;
+    }
+    else{ //Default user to this location
+      var userPos = handler.addMarker({
+        lat: defaultUserPos.lat,
+        lng: defaultUserPos.lng,
+        picture: {
+          url: icons["person"],
+          width: 64,
+          height: 64
+        },
+      });
+      
+      lat = defaultUserPos.lat;
+      lng = defaultUserPos.lng;
+    }
     
     handler.bounds.extendWith(userPos);
-    handler.fitMapToBounds(); 
+    handler.fitMapToBounds();
     
     //Draw "Search" Range
-    //drawCircle(position.coords.latitude, position.coords.longitude, 10000, "blue");
+    drawCircle(lat, lng, searchRange, "blue", 0.5, 2, "blue", 0.075);
   };
   
-  function drawCircle(latitude, longitude, radius, color)
+  function drawCircle(latitude, longitude, radius, strokeColor, strokeOpacity, strokeWeight,
+    fillColor, fillOpacity)
   {
-    var circle = handler.addCircles(
-      [{
+    var circle = handler.addCircle(
+      {
         lat: latitude,
         lng: longitude,
         radius: radius
-      }],
-      { strokeColor: color}
+      },
+      {
+        strokeColor: strokeColor,
+        strokeOpacity: strokeOpacity,
+        strokeWeight: strokeWeight,
+        fillColor: fillColor,
+        fillOpacity: fillOpacity
+      }
     );
   }
   
