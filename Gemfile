@@ -39,8 +39,6 @@ gem 'jbuilder', '~> 2.5'
 gem 'geocoder'
 gem 'gmaps4rails'
 
-gem 'sqlite3'
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -51,6 +49,8 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'factory_girl_rails'
+  gem 'cucumber-rails', require: false
+  gem 'database_cleaner'
 end
 
 group :development do
@@ -66,9 +66,3 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "jquery-rails"
-
-#10/6/17 - gems for tests
-group :test do
-  gem 'cucumber-rails', require: false
-  gem 'database_cleaner'
-end
