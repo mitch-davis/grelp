@@ -3,13 +3,26 @@ Feature: yelp_find_restaurants
     I need a system that is capable of finding restaurants near my location
     So I can have a wide selection of restaurants with avaiable coupons.
     
+    Scenario: I need to access yelp API
+    When I ask for restaurants in the area
+    Then I should have access to the yelp API
+    
+    Scenario: I call to the yelp API
+    When I need information from the yelp API
+    Then I should not be over the maximum daily calls
+    
     Scenario: Viewing list of restaurants
     When I shearch for restaurants
-    Then I should see all near by restaurants
+    Then I should see a list of all restaurants within ten miles of me
+    
+    Scenario: There are no restaurants near my location
+    When I shearch for reasturants and none are within ten miles
+    Then I should recive a map of my local area with only my location and an 
+    noifiation that there are no restaurants within ten miles of me
     
     Scenario: Viewing reviews of restaurants
     When I request reviews from yelp
-    Then I should see reviews of all near by restaurants
+    Then I should see reviews of all reasturants within ten miles of me
     
     Scenario: I need to quick and see to see rating of a restaurant
     When I want a rating of a restaurant
