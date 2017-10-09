@@ -10,6 +10,10 @@ Feature: yelp_find_restaurants
     When I request reviews from yelp
     Then I should see reviews of all near by restaurants
     
+    Scenario: I need to quick and see to see rating of a restaurant
+    When I want a rating of a restaurant
+    Then I should receive a one to five star rating 
+    
     Scenario: If list of Resturants comes back
     When list from yelp comes back
     Then I need to make sure they are restaurants
