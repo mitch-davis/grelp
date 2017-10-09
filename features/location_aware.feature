@@ -9,8 +9,8 @@ Feature: Location Aware
 
     Scenario: Viewing list of establishments
     When I go to the list of establishments
-    Then I should recieve a list of establishments near me
+    Then I should recieve a list of establishments within ten miles of me
 
     Scenario: Viewing list of deals
     When I go to the list of deals
-    Then I should recieve a list of deals near me
+    Then I should recieve a list of deals within ten miles of me
