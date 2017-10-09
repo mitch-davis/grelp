@@ -14,6 +14,10 @@ Feature: yelp_find_restaurants
     When list from yelp comes back
     Then I need to make sure they are restaurants
     
+    Scenario: I want a to specifiy by price range, diet, etc.
+    When I change the arrangement of the restaurants
+    Then I should have a new list of restaurants corosponding to the new criteria
+    
     Scenario: Looking at coupons
     When I request coupons from a restaurants
     Then I Should see a list of coupons from a restaurant
