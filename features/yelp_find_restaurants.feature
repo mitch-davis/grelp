@@ -17,8 +17,7 @@ Feature: yelp_find_restaurants
     
     Scenario: There are no restaurants near my location
     When I shearch for reasturants and none are within ten miles
-    Then I should recive a map of my local area with only my location and an 
-    noifiation that there are no restaurants within ten miles of me
+    Then I should recive a map of my local area with only my location and an notifiation that there are no restaurants within ten miles of me
     
     Scenario: Viewing reviews of restaurants
     When I request reviews from yelp

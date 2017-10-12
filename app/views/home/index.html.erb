@@ -6,6 +6,9 @@
 </head>
 
 <body>
+  <div id="informationId" data-position="false" style="display: none;">
+    <p id="positionId">Position: False</p>
+  </div>
   <div style='width: 100%; height: 100vh'>
     <div id="map" style='width: 100%; height: 100%;'></div>
   </div>
@@ -125,6 +128,8 @@
       
       lat = position.coords.latitude;
       lng = position.coords.longitude;
+      
+      document.getElementById("positionId").textContent="Position: True";
     }
     else{ //Default user to this location
       var userPos = handler.addMarker({
@@ -136,6 +141,8 @@
           height: 64
         },
       });
+      
+      document.getElementById("positionId").textContent="Position: Simulated";
       
       lat = defaultUserPos.lat;
       lng = defaultUserPos.lng;

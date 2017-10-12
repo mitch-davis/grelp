@@ -4,8 +4,8 @@ Feature: Location Aware
     So that I don't need use a search function which takes a longer time and requires more interaction and thought
 
     Scenario: Viewing application's home page
-    When I go to the homepage
-    Then I should be accurately display on the map
+    When I visit the homepage
+    Then I should have access to the location
 
     Scenario: Viewing list of establishments
     When I go to the list of establishments
