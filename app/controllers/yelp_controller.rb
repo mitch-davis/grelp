@@ -1,8 +1,9 @@
+#class YelpController < ApplicationController
+#end
+
 require "json"
 require "http"
 require "optparse"
-
-#authorizes the yelp API client keys
 
 CLIENT_ID = "KlCuB5YcLt3UlZuk9e8uRQ"
 CLIENT_SECRET = "6J6CPbOkVAabYGfqgDkK4gb4mYhngJaAS5pbzAxT3gHsn8et7xbODCxqFFE59xkM"
@@ -13,11 +14,13 @@ BUSINESS_PATH = "/v3/businesses/"  # trailing / because we append the business i
 TOKEN_PATH = "/oauth2/token"
 GRANT_TYPE = "client_credentials"
 
-DEFAULT_BUSINESS_ID = "yelp-colorado-springs"
+#sets up standards if no terms are put in the command
+DEFAULT_BUSINESS_ID = "yelp-san-francisco"
 DEFAULT_TERM = "dinner"
-DEFAULT_LOCATION = "Colorado Springs, Co"
-SEARCH_LIMIT = 20 
+DEFAULT_LOCATION = "San Francisco, CA"
+SEARCH_LIMIT = 20
 
+#ensures that you have a client ID and Client Secret which allows access to the yelp API
 def bearer_token
   # Put the url together
   url = "#{API_HOST}#{TOKEN_PATH}"
@@ -50,13 +53,13 @@ def search(term, location)
   response.parse
 end
 
-
 def business(business_id)
   url = "#{API_HOST}#{BUSINESS_PATH}#{business_id}"
 
   response = HTTP.auth(bearer_token).get(url)
   response.parse
 end
+
 
 
 options = {}
@@ -84,7 +87,6 @@ end.parse!
 
 command = ARGV
 
-
 case command.first
 when "search"
   term = options.fetch(:term, DEFAULT_TERM)
@@ -107,6 +109,7 @@ when "lookup"
 
   puts "Found business with id #{business_id}:"
   puts JSON.pretty_generate(response)
+  
 else
   puts "Please specify a command: search or lookup"
 end
