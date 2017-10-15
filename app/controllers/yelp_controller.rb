@@ -18,6 +18,8 @@ GRANT_TYPE = "client_credentials"
 DEFAULT_BUSINESS_ID = "yelp-san-francisco"
 DEFAULT_TERM = "dinner"
 DEFAULT_LOCATION = "San Francisco, CA"
+DEFAULT_PRICE = "1"
+DEFAULT_RADIUS = 5000
 SEARCH_LIMIT = 20
 
 #ensures that you have a client ID and Client Secret which allows access to the yelp API
@@ -41,11 +43,13 @@ def bearer_token
   "#{parsed['token_type']} #{parsed['access_token']}"
 end
 
-def search(term, location)
+def search(term, radius, price, location)
   url = "#{API_HOST}#{SEARCH_PATH}"
   params = {
     term: term,
+    price: price,
     location: location,
+    radius: radius,
     limit: SEARCH_LIMIT
   }
 
@@ -69,7 +73,15 @@ OptionParser.new do |opts|
   opts.on("-tTERM", "--term=TERM", "Search term (for search)") do |term|
     options[:term] = term
   end
-
+  
+  opts.on("-pPRICE", "--price=PRICE", "Search price (for search)") do |price|
+    options[:price] = price
+  end
+  
+  opts.on("-rRADIUS", "--radius=RADIUS", "Search radius (for search)") do |radius|
+    options[:radius] = radius
+  end
+  
   opts.on("-lLOCATION", "--location=LOCATION", "Search location (for search)") do |location|
     options[:location] = location
   end
@@ -90,11 +102,12 @@ command = ARGV
 case command.first
 when "search"
   term = options.fetch(:term, DEFAULT_TERM)
+  price = options.fetch(:price, DEFAULT_PRICE)
+  radius = options.fetch(:radius, DEFAULT_RADIUS)
   location = options.fetch(:location, DEFAULT_LOCATION)
-
   raise "business_id is not a valid parameter for searching" if options.key?(:business_id)
 
-  response = search(term, location)
+  response = search(term, radius, price, location)
 
   puts "Found #{response["total"]} businesses. Listing #{SEARCH_LIMIT}:"
   response["businesses"].each {|biz| puts biz["name"]}
