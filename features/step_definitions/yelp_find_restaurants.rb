@@ -1,18 +1,13 @@
 When(/^I shearch for restaurants$/)do
     
 end
-
-Then(/^I should see all near by restaurants$/)do
+Then(/^I should see a list of all restaurants within ten miles of me$/)do
 end
-
-When(/^I request reviews from yelp$/)do
+When(/^$/)do
 end
-
-Then(/^I should see reviews of all near by restaurants$/)do
+Then(/^$/)do
 end
-
-When(/^I request coupons from a restaurants$/)do
+When(/^$/)do
 end
-
-Then(/^I Should see a list of coupons from a restaurant$/)do
+Then(/^$/)do
 end
