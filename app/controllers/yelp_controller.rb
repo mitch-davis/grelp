@@ -1,6 +1,6 @@
 class YelpController < ApplicationController
   def index
-    @businesses = Yelp.near
+    @businesses = Yelp.near()
   end
 end
 
