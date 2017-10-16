@@ -11,7 +11,7 @@ When(/^I shearch for reasturants and none are within ten miles$/)do
 end
 
 Then(/^I should recive a map of my local area with only my location and an notifiation that there are no restaurants within ten miles of me$/)do
-    expect(page).to have_no_contet("Buisness: False")
+    expect(page).to have_content("Error")
 end
 
 When(/^I need information from the yelp API$/)do

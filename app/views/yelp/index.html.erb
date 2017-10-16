@@ -1,3 +1,5 @@
-Test
+Businesses Near You:
 
-<%= @businesses %>
+<% if @businesses.count == 0 %>
+Error: No Businesses Found
+<% end %>
