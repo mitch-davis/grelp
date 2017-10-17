@@ -4,6 +4,6 @@ class Business
     end
 
     def self.near location
-       return []
+       return ["Il Vicino", "Panera Bread","Smash Burger","Hacienda", "Jives"]
     end
 end

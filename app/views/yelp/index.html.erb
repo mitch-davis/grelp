@@ -2,4 +2,12 @@ Businesses Near You:
 
 <% if @businesses.count == 0 %>
 Error: No Businesses Found
+<% else %>
+<ul class="buisnesses list">
+    <% @businesses.each do |item| %>
+        <li>
+            <%= item %>
+        </li>
+    <% end %>
+</ul>
 <% end %>
