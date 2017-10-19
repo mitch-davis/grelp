@@ -6,3 +6,11 @@ body {
   margin: 0;
   padding: 0;
 }
+.bottom-bar {
+  text-align: center;
+  background-color:lightblue;
+  /*
+  vertical-align: middle;
+  horizontal-align: middle;
+  */
+}
