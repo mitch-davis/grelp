@@ -14,3 +14,7 @@ Feature: Location Aware
     Scenario: Viewing list of deals
     When I go to the list of deals
     Then I should recieve a list of deals within ten miles of me
+    
+    Scenario: Viewing application's home page
+    When Whenever I visit the homepage
+    Then The browser should find a cookie with my location
