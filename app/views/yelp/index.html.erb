@@ -1,23 +1,21 @@
-
-
-<body>
-<head></head>
-<style>
-body {
-    background-color: lightblue
-}
-</style>
 <title>GRELP</title>
-<h2>Buisnesses near you:</h2>
 <% if @businesses.count == 0 %>
 Error: No Businesses Found
 <% else %>
-<ul class="buisnesses list">
-    <% @businesses.each do |item| %>
-        <li style = "font-size:20px, list-style-type:square">
-            <%= item %>
-        </li>
-    <% end %>
-</ul>
+<br>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+        Businesses Near You
+        </div>
+        <ul class="list-group list-group-flush">
+            <% @businesses.each do |item| %>
+                <li class="list-group-item">
+                    <%= item %>
+                </li>
+            <% end %>
+        </ul>
+    </div>
+</div>
 <% end %>
 </body>
