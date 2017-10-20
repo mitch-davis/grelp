@@ -1,33 +1,36 @@
-<h1>All Deals</h1>
-<table class="table table-bordered ">
-  <thead>
-    <tr>
-      <th>Restaurant Name</th>
-      <th>Deal Description</th>
-      <th>Deal Code</th>
-      <th>Deal Restrictions</th>
-      <th>Expiration Date</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @deals.each do |deal| %>
+
+<div class="container">
+  <h1>Grelp Deals</h1>
+  <table class="table table-bordered ">
+    <thead>
       <tr>
-        <td>
-          <%= deal[:Restaurant]  %>
-        </td>
-        <td>
-          <%= deal[:Value] %>
-        </td>
-        <td>
-          <%= deal[:Offer_Code] %>
-        </td>
-        <td>
-          <%= deal[:Restrictions] %>
-        </td>
-        <td>
-          <%= deal[:Exp_Date] %>
-        </td>
+        <th>Restaurant Name</th>
+        <th>Deal Description</th>
+        <th>Deal Code</th>
+        <th>Deal Restrictions</th>
+        <th>Expiration Date</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @deals.each do |deal| %>
+        <tr>
+          <td>
+            <%= deal[:Restaurant]  %>
+          </td>
+          <td>
+            <%= deal[:Value] %>
+          </td>
+          <td>
+            <%= deal[:Offer_Code] %>
+          </td>
+          <td>
+            <%= deal[:Restrictions] %>
+          </td>
+          <td>
+            <%= deal[:Exp_Date] %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
