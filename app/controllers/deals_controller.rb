@@ -1,5 +1,5 @@
 class DealsController < ApplicationController
     def index()
-        @test = Deal.test
+        @deals = Deal.near_by_deals
     end
 end
