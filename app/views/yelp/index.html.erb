@@ -4,18 +4,29 @@ Error: No Businesses Found
 <% else %>
 <br>
 <div class="container">
-    <div class="card">
-        <div class="card-header">
-        Businesses Near You
-        </div>
-        <ul class="list-group list-group-flush">
-            <% @businesses.each do |item| %>
-                <li class="list-group-item list-group-item-action">
-                    <%= item %>
-                </li>
-            <% end %>
-        </ul>
-    </div>
+    <h2>Resturants:</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <% @attributes.each do |items| %>
+                       <th>
+                           <%= items %>
+                       </th>
+                <% end %>
+            </tr>
+        </thead>
+    <tbody>
+        <% @businesses.each do |list| %>
+            <tr>
+                <% list.each do |input| %>
+                    <td>
+                        <%= input %>
+                    </td>
+                <% end %>
+            </tr>
+        <% end %>
+    </tbody>
+    </table>
 </div>
 <% end %>
 </body>
