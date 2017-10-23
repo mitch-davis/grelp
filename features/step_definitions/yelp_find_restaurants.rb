@@ -7,3 +7,13 @@ Then(/^I should see a table of places to eat$/)do
     expect(@businesses.length).to be >= 1
 end
 
+When(/^I need a list of restaurants$/) do
+    visit business_path
+end
+
+Then(/^I should see at least 1 buisness listing$/) do
+    @businesses = Business.near request.location
+    @buisness.each do |item|
+        expect(item.length).to be >= 1
+    end
+end

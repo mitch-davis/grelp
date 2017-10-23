@@ -6,11 +6,32 @@ body {
   margin: 0;
   padding: 0;
 }
-.bottom-bar {
+h2 > a {
+  float: left;
+  vertical-align: top;
+}
+.nav-bar {
   text-align: center;
-  background-color:lightblue;
+  background-color:#98AFC7;
   /*
   vertical-align: middle;
   horizontal-align: middle;
   */
 }
+.nav-bar a{
+  position: relative;
+  top: 6px;
+  color:black;
+  float: left;
+  display: block;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  text-decoration: none;
+  font-size: 18px;
+}
+.nav-bar .active {
+  background-color: #4CAF50;
+  color: white;
+}
+

@@ -6,4 +6,8 @@ Feature: yelp_find_restaurants
     Scenario: 
         When I go to the business page
         Then I should see a table of places to eat
+        
+    Scenario:
+      When I need a list of restaurants
+      Then I should see at least 1 buisness listing
     

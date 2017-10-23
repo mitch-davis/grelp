@@ -1,12 +1,17 @@
 <title>GRELP</title>
+<div style='width: 100%; height: 9vh' class="nav-bar">
+    <a href="/"><h2>GRELP!</h2></a>
+    <a href="/business/">Restaurants Near Me</a>
+    <a href="/deals/">Deals Near Me</a>
+</div>
 <% if @businesses.count == 0 %>
 Error: No Businesses Found
 <% else %>
 <br>
 <div class="container">
     <h2>Resturants:</h2>
-    <table class="table table-bordered">
-        <thead>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-default">
             <tr>
                 <% @attributes.each do |items| %>
                        <th>
@@ -15,17 +20,17 @@ Error: No Businesses Found
                 <% end %>
             </tr>
         </thead>
-    <tbody>
-        <% @businesses.each do |list| %>
-            <tr>
-                <% list.each do |input| %>
-                    <td>
-                        <%= input %>
-                    </td>
-                <% end %>
-            </tr>
-        <% end %>
-    </tbody>
+        <tbody>
+            <% @businesses.each do |list| %>
+                <tr>
+                    <% list.each do |input| %>
+                        <td>
+                            <%= input %>
+                        </td>
+                    <% end %>
+                </tr>
+            <% end %>
+        </tbody>
     </table>
 </div>
 <% end %>
