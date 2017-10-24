@@ -6,11 +6,33 @@ body {
   margin: 0;
   padding: 0;
 }
-.bottom-bar {
-  text-align: center;
-  background-color:lightblue;
-  /*
-  vertical-align: middle;
-  horizontal-align: middle;
-  */
+
+h1{
+  float: left;
+  vertical-align: top;
+  top: 8;
+  padding-top: 4px;
+  padding-left: 10px;
 }
+.nav-bar {
+  text-align: center;
+  background-color:#98AFC7;
+  vertical-align: middle;
+}
+.nav-bar a{
+  position: relative;
+  top: 14px;
+  color:black;
+  float: left;
+  display: block;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-left: 20px;
+  text-decoration: none;
+  font-size: 18px;
+}
+.nav-bar .active {
+  background-color: #4CAF50;
+  color: white;
+}
+

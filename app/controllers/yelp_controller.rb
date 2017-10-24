@@ -2,6 +2,7 @@ class YelpController < ApplicationController
   def index
     @businesses = Business.near request.location
     @count = @businesses.count
+    @attributes = Business.attributes
   end
 end
 
