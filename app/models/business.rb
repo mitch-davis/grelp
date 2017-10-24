@@ -8,6 +8,6 @@ class Business
     end
     
     def self.attributes
-        return ["Resturants", "Ratings", "Price Range", "Hours of Operations", "Number of Coupons"]
+        return ["Restaurants", "Ratings", "Price Range", "Hours of Operations", "Number of Coupons"]
     end
 end
