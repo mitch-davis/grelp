@@ -3,7 +3,7 @@
   <script src="//maps.google.com/maps/api/js?key=AIzaSyCMPe5C0yTvu9AGXdeFSD-AIwo5eilQUis" id='a'></script>
   <script src="//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js" type='text/javascript' id='a'></script>
   <script src='//cdn.rawgit.com/printercu/google-maps-utility-library-v3-read-only/master/infobox/src/infobox_packed.js' type='text/javascript' id='a'></script>
-  
+
   <script type="text/javascript" data-turbolinks-eval=true>
     //https://github.com/JonKernPA/gmaps_zurb
     var mapStyle = [{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#165c64"},{"saturation":34},{"lightness":-69},{"visibility":"on"}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"hue":"#b7caaa"},{"saturation":-14},{"lightness":-18},{"visibility":"on"}]},{"featureType":"landscape.man_made","elementType":"all","stylers":[{"hue":"#cbdac1"},{"saturation":-6},{"lightness":-9},{"visibility":"on"}]},{"featureType":"road","elementType":"geometry","stylers":[{"hue":"#8d9b83"},{"saturation":-89},{"lightness":-12},{"visibility":"on"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"hue":"#d4dad0"},{"saturation":-88},{"lightness":54},{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"hue":"#bdc5b6"},{"saturation":-89},{"lightness":-3},{"visibility":"simplified"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"hue":"#bdc5b6"},{"saturation":-89},{"lightness":-26},{"visibility":"on"}]},{"featureType":"poi","elementType":"geometry","stylers":[{"hue":"#c17118"},{"saturation":61},{"lightness":-45},{"visibility":"on"}]},{"featureType":"poi.park","elementType":"all","stylers":[{"hue":"#8ba975"},{"saturation":-46},{"lightness":-28},{"visibility":"on"}]},{"featureType":"transit","elementType":"geometry","stylers":[{"hue":"#a43218"},{"saturation":74},{"lightness":-51},{"visibility":"simplified"}]},{"featureType":"administrative.province","elementType":"all","stylers":[{"hue":"#ffffff"},{"saturation":0},{"lightness":100},{"visibility":"simplified"}]},{"featureType":"administrative.neighborhood","elementType":"all","stylers":[{"hue":"#ffffff"},{"saturation":0},{"lightness":100},{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"labels","stylers":[{"hue":"#ffffff"},{"saturation":0},{"lightness":100},{"visibility":"off"}]},{"featureType":"administrative.land_parcel","elementType":"all","stylers":[{"hue":"#ffffff"},{"saturation":0},{"lightness":100},{"visibility":"off"}]},{"featureType":"administrative","elementType":"all","stylers":[{"hue":"#3a3935"},{"saturation":5},{"lightness":-57},{"visibility":"off"}]},{"featureType":"poi.medical","elementType":"geometry","stylers":[{"hue":"#cba923"},{"saturation":50},{"lightness":-46},{"visibility":"on"}]}]
@@ -23,7 +23,7 @@
       jives: {name: "Jives", content: "Jives the most hippityhoppist coffee place in the town, breh."},
     };
     var handler; // Map
-  
+
     $( document ).ready(function() {
       if(handler == null)
       {
@@ -32,7 +32,7 @@
       else{
         window.location.reload();
       }
-      
+
       $('#HomeButton').click( function() { Destroy(); } );
       $('#BusinessButton').click( function() { Destroy(); } );
       $('#DealsButton').click( function() { Destroy(); } );
@@ -47,7 +47,7 @@
           },
           internal: {id: 'map'}
         },
-    
+
         function(){
           // Get user location
           if(navigator.geolocation) //If we can get their location, set their location
@@ -58,44 +58,45 @@
           {
             displayUserOnMap( defaultUserPos );
           }
-    
+
           //Show Markers
           var markers = handler.addMarkers(buildExample());
           handler.bounds.extendWith(markers);
           handler.fitMapToBounds();
-          
+
           //Debug, display if a cookie exists of the user's location
-          var x = readCookie("GrelpLocation");
-          if (x) {
-              document.getElementById("cookieId").textContent="Cookie: True - "+x;
+          var lat = readCookie("latitude");
+          var long = readCookie("longitude")
+          if (lat && long) {
+              document.getElementById("cookieId").textContent="Cookie: True - " + lat + long;
           }
         }
       );
     });
-    
+
     function Destroy()
     {
-      
+
       //$('#map').remove();
       //handler = null;
       //window.google = {};
-      
+
       /*
       var r = document.getElementsByTagName('script');
-  
+
       for (var i = (r.length-1); i >= 0; i--) {
-      
+
           if(r[i].getAttribute('id') != 'a'){
               r[i].parentNode.removeChild(r[i]);
           }
-      
+
       }
       */
-      
+
       //window.google = {};
-      
+
     }
-    
+
     function buildExample()
     {
       return [
@@ -106,7 +107,7 @@
         buildMarker( 38.913437, -104.814788, icons["coffee"], buildInfo(info["jives"], '<%= asset_path('jives.jpg') %>') ),
       ];
     }
-  
+
     function buildMarker(latitude, longitude, pictureURL, info)
     {
       // Documentation: https://developers.google.com/maps/documentation/static-maps/
@@ -134,17 +135,17 @@
         custom_infowindow: info
       }
     }
-  
+
     function displayMarkersOnMap(markers){
       var marker = handler.addMarkers(markers);
-  
+
       handler.bounds.extendWith(marker);
       fitMapToBounds();
     }
-  
+
     function displayUserOnMap(position){
       var lat, lng;
-  
+
       //Draw Person
       if(position.coords){ // If we got a location
         var userPos = handler.addMarker({
@@ -156,10 +157,10 @@
             height: 64
           },
         });
-  
+
         lat = position.coords.latitude;
         lng = position.coords.longitude;
-  
+
         document.getElementById("positionId").textContent="Position: True";
       }
       else{ //Default user to this location
@@ -172,24 +173,26 @@
             height: 64
           },
         });
-  
+
         document.getElementById("positionId").textContent="Position: Simulated";
-  
+
         lat = defaultUserPos.lat;
         lng = defaultUserPos.lng;
       }
-  
+
       handler.bounds.extendWith(userPos);
       handler.fitMapToBounds();
-      
+
       //Create cookie with the user's location
-      eraseCookie("GrelpLocation");
-      createCookie("GrelpLocation", lat+","+lng, 0);
-  
+      eraseCookie("latitude");
+      eraseCookie("longitude")
+      createCookie("latitude", lat, 0);
+      createCookie("longitude", lng, 0)
+
       //Draw "Search" Range
       drawCircle(lat, lng, searchRange, "blue", 0.5, 2, "blue", 0.075);
     };
-  
+
     function drawCircle(latitude, longitude, radius, strokeColor, strokeOpacity, strokeWeight,
       fillColor, fillOpacity)
     {
@@ -208,7 +211,7 @@
         }
       );
     }
-  
+
     function buildInfo(info, imagePath)
     { //"Panera Bread <img src='%= asset_path('panera_bread.png') %>' width='90' height='140'> Meh it's alright."),
       var name = info.name + " ";
@@ -217,7 +220,7 @@
       //console.log(name + imagePath + content);
       return imagePath + content; //Removed name for now. Using logo as the name to show.
     }
-    
+
     //Ref: https://www.quirksmode.org/js/cookies.html
     function createCookie(name,value,days) {
       var expires = "";
@@ -228,7 +231,7 @@
       }
       document.cookie = name + "=" + value + expires + "; path=/";
     }
-    
+
     function readCookie(name) {
         var nameEQ = name + "=";
         var ca = document.cookie.split(';');
@@ -239,12 +242,12 @@
         }
         return null;
     }
-    
+
     function eraseCookie(name) {
         createCookie(name,"",-1);
     }
   </script>
-  
+
 </head>
 
 <body>
