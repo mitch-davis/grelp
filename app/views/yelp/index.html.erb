@@ -6,17 +6,9 @@
 </head>
 
 <body>
-<div style='width: 100%; height: 8vh' class="nav-bar">
-    <h1>GRELP!</h1>
-    <a href="/">Home</a>
-    <a href="/business/">Restaurants Near Me</a>
-    <a href="/deals/">Deals Near Me</a>
-</div>
-
 <% if @businesses.count == 0 %>
 Error: No Businesses Found
 <% else %>
-<br>
 <div class="container">
     <h2>Restaurants:</h2>
     <table class="table table-bordered table-hover">
