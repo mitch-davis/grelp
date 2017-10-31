@@ -9,26 +9,25 @@
 <% if @businesses.count == 0 %>
 Error: No Businesses Found
 <% else %>
+
 <div class="container">
     <h2>Restaurants:</h2>
     <table class="table table-bordered table-hover">
         <thead class="thead-default">
             <tr>
-                <% @attributes.each do |items| %>
-                       <th>
-                           <%= items %>
-                       </th>
-                <% end %>
+                <th>Restaurant Name</th>
+                <th>rating</th>
+                <th>price</th>
+                <th>Open?</th>
             </tr>
         </thead>
         <tbody>
-            <% @businesses.each do |list| %>
+            <% @businesses["businesses"].each do |item| %>
                 <tr>
-                    <% list.each do |input| %>
-                        <td>
-                            <%= input %>
-                        </td>
-                    <% end %>
+                    <td><%= item["name"]  %></td>
+                    <td><%= item["rating"] %></td>
+                    <td><%= item["price"] %></td>
+                    <td><%= item["is_closed"] %></td>
                 </tr>
             <% end %>
         </tbody>
