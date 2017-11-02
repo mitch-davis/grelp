@@ -25,7 +25,7 @@ class Business
     end
 
     def self.near location
-       return search("food",location[:latitude], location[:longitude])
+       return search("food",location[:latitude], location[:longitude],true)
     end
     
     def self.attributes
@@ -55,9 +55,10 @@ class Business
         "#{parsed['token_type']} #{parsed['access_token']}"
     end
     
-    def self.search(term, latitude, longitude)
+    def self.search(term, latitude, longitude, open_now)
         url = "#{@@API_HOST}#{@@SEARCH_PATH}"
         params = {
+            open_now:open_now,
             term: term,
             latitude: latitude,
             longitude: longitude,

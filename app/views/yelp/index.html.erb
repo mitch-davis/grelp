@@ -10,7 +10,7 @@
 Error: No Businesses Found
 <% else %>
 
-<div class="container">
+<div class="container" style=" padding-top: 50px">
     <h2>Restaurants:</h2>
     <table class="table table-bordered table-hover">
         <thead class="thead-default">
@@ -24,10 +24,10 @@ Error: No Businesses Found
         <tbody>
             <% @businesses["businesses"].each do |item| %>
                 <tr>
-                    <td><%= item["name"]  %></td>
+                    <td><a href=""><%= item["name"]  %></a></td>
                     <td><%= item["rating"] %></td>
                     <td><%= item["price"] %></td>
-                    <td><%= item["is_closed"] %></td>
+                    <td>Open Now</td>
                 </tr>
             <% end %>
         </tbody>
