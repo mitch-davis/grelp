@@ -1,5 +1,5 @@
 When(/^I visit the homepage$/) do
-    visit root_path
+    visit home_path
 end
 
 Then(/^I should have access to the location$/) do
@@ -7,7 +7,7 @@ Then(/^I should have access to the location$/) do
 end
 
 When(/^Whenever I visit the homepage$/) do
-    visit root_path
+    visit home_path
 end
 
 Then(/^The browser should find a cookie with my location$/) do
