@@ -4,7 +4,9 @@ class HomeController < ApplicationController
     CLIENT_SECRET = "6J6CPbOkVAabYGfqgDkK4gb4mYhngJaAS5pbzAxT3gHsn8et7xbODCxqFFE59xkM"
 
     def index
-        
-    end
+        @businesses = Business.near @location
+        @count = @businesses.count
+        @attributes = Business.attributes
+      end
   
 end
