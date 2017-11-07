@@ -6,7 +6,7 @@
   <script type="text/javascript" data-turbolinks-eval=true>
     //https://github.com/JonKernPA/gmaps_zurb
     var mapStyle = [{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#165c64"},{"saturation":34},{"lightness":-69},{"visibility":"on"}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"hue":"#b7caaa"},{"saturation":-14},{"lightness":-18},{"visibility":"on"}]},{"featureType":"landscape.man_made","elementType":"all","stylers":[{"hue":"#cbdac1"},{"saturation":-6},{"lightness":-9},{"visibility":"on"}]},{"featureType":"road","elementType":"geometry","stylers":[{"hue":"#8d9b83"},{"saturation":-89},{"lightness":-12},{"visibility":"on"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"hue":"#d4dad0"},{"saturation":-88},{"lightness":54},{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"hue":"#bdc5b6"},{"saturation":-89},{"lightness":-3},{"visibility":"simplified"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"hue":"#bdc5b6"},{"saturation":-89},{"lightness":-26},{"visibility":"on"}]},{"featureType":"poi","elementType":"geometry","stylers":[{"hue":"#c17118"},{"saturation":61},{"lightness":-45},{"visibility":"on"}]},{"featureType":"poi.park","elementType":"all","stylers":[{"hue":"#8ba975"},{"saturation":-46},{"lightness":-28},{"visibility":"on"}]},{"featureType":"transit","elementType":"geometry","stylers":[{"hue":"#a43218"},{"saturation":74},{"lightness":-51},{"visibility":"simplified"}]},{"featureType":"administrative.province","elementType":"all","stylers":[{"hue":"#ffffff"},{"saturation":0},{"lightness":100},{"visibility":"simplified"}]},{"featureType":"administrative.neighborhood","elementType":"all","stylers":[{"hue":"#ffffff"},{"saturation":0},{"lightness":100},{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"labels","stylers":[{"hue":"#ffffff"},{"saturation":0},{"lightness":100},{"visibility":"off"}]},{"featureType":"administrative.land_parcel","elementType":"all","stylers":[{"hue":"#ffffff"},{"saturation":0},{"lightness":100},{"visibility":"off"}]},{"featureType":"administrative","elementType":"all","stylers":[{"hue":"#3a3935"},{"saturation":5},{"lightness":-57},{"visibility":"off"}]},{"featureType":"poi.medical","elementType":"geometry","stylers":[{"hue":"#cba923"},{"saturation":50},{"lightness":-46},{"visibility":"on"}]}]
-    var iconBase = 'https://mapstesting.google.com/mapfiles/kml/shapes/';
+    var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
     var icons = { //Reference: http://kml4earth.appspot.com/icons.html
       person: iconBase + 'man.png',
       dining: iconBase + 'dining.png',
@@ -14,13 +14,6 @@
     };
     var defaultUserPos = { lat: 38.905374, lng: -104.818371 }; // Default User location inside University Village
     var searchRange = 10000; // Set how far to "search". Later, we can implement to change this by user input.
-    var info = {
-      il_vicino: {name: "Il Vicino", content: "Il Vicino has some good pizza... and wine... lots of wine... mmm."},
-      panera_bread: {name: "Panera Bread", content: "Meh it's alright."},
-      smashburger: {name: "Smash Burger", content: "The best burgers, for the best price!"},
-      hacienda: {name: "Hacienda", content: "The best mexican food you'll find near campus!"},
-      jives: {name: "Jives", content: "Jives the most hippityhoppist coffee place in the town, breh."},
-    };
     var handler; // Map
 
     $( document ).ready(function() {
@@ -95,24 +88,26 @@
       //window.google = {};
 
     }
-
+    
     function buildExample()
     {
-      return [
-        buildMarker( 38.904813, -104.819010, icons["dining"], buildInfo(info["il_vicino"], '<%= asset_path('il_vicino.png') %>') ),
-        buildMarker( 38.904365, -104.818479, icons["dining"], buildInfo(info["panera_bread"], '<%= asset_path('panera_bread.png') %>') ),
-        buildMarker( 38.904318, -104.818078, icons["dining"], buildInfo(info["smashburger"], '<%= asset_path('smashburger.png') %>') ),
-        buildMarker( 38.904531, -104.817729, icons["dining"], buildInfo(info["hacienda"], '<%= asset_path('hacienda.jpg') %>') ),
-        buildMarker( 38.913437, -104.814788, icons["coffee"], buildInfo(info["jives"], '<%= asset_path('jives.jpg') %>') ),
-      ];
-    }
+      var list = <%= @businesses["businesses"].to_json.html_safe %>;
+      //console.log(list);
+      var markerList = new Array();
 
-    function buildMarker(latitude, longitude, pictureURL, info)
+      list.forEach(function(item) {
+          var mark = buildMarker( item, icons["dining"], buildInfo(item) );
+          markerList.push(mark);
+      });
+      return markerList;
+    }
+    
+    function buildMarker( item , pictureURL, info)
     {
       // Documentation: https://developers.google.com/maps/documentation/static-maps/
       return marker = {
-        lat: latitude,
-        lng: longitude,
+        lat: item["coordinates"]["latitude"],
+        lng: item["coordinates"]["longitude"],
         picture: {
           url: pictureURL, // NULL is fine for pictureURL returns default red pin
           width: 64,
@@ -121,6 +116,7 @@
         infowindow: info
       }
     }
+    
     function buildCustomMarker(latitude, longitude, pictureURL, info) //NOT FUNCTIONAL YET
     {
       return marker = {
@@ -210,14 +206,13 @@
         }
       );
     }
-
-    function buildInfo(info, imagePath)
+    
+    function buildInfo(item)
     { //"Panera Bread <img src='%= asset_path('panera_bread.png') %>' width='90' height='140'> Meh it's alright."),
-      var name = info.name + " ";
-      imagePath = "<p><c><img src= '" +imagePath +"' width='150' height='140'></c></p>";
-      var content = " <p>" + info.content + "</p>";
-      //console.log(name + imagePath + content);
-      return imagePath + content; //Removed name for now. Using logo as the name to show.
+      var name = "<h2>" + item["name"] + "</h2> ";
+      imagePath = "<p><c><img src= '" +item["image_url"] +"' width='150' height='140'></c></p>";
+      var content = " <tr>" + "<td><b>Rating:</b> "+item["rating"]+"</td>" + "   <td><b>Price:</b> "+item["price"]+"</td>" + " </tr>";
+      return name + imagePath + content;
     }
 
     //Ref: https://www.quirksmode.org/js/cookies.html
@@ -250,7 +245,7 @@
 </head>
 
 <body>
-  <div id="informationId" data-position="false" style="display: none;">
+  <div id="informationId" data-position="false" style="display: none; padding-top: 100px">
     <p id="positionId">Position: False</p>
     <p id="cookieId">Cookie: False</p>
   </div>
