@@ -1,3 +1,0 @@
-class Yelp < ApplicationRecord
-   
-end
