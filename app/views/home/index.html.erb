@@ -15,6 +15,11 @@
     var defaultUserPos = { lat: 38.905374, lng: -104.818371 }; // Default User location inside University Village
     var searchRange = 10000; // Set how far to "search". Later, we can implement to change this by user input.
     var handler; // Map
+    
+    //If an error occurs on this page, refresh. Shit fix for the Google API load error and Splash bug.
+    window.onerror = function(){
+      location.reload();
+    }
 
     $( document ).ready(function() {
       //Checks API Issues
