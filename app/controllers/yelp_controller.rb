@@ -3,6 +3,10 @@ class YelpController < ApplicationController
     @businesses = Business.near @location
     @count = @businesses.count
     @attributes = Business.attributes
+    @businesses["businesses"].each do |item|
+      item["ratingNum"] = item["rating"]
+      item["rating"] = Business.genRatingHTML item["rating"] #convert rating float to HTML for star icons
+    end
   end
 end
 

@@ -68,4 +68,19 @@ class Business
         response.parse
     end
     
+    #generates the HTML for star icons based off of rating numeric
+    def self.genRatingHTML rating
+        @ratingHTML = ""
+        @ratingInt = rating.floor
+        i = 0
+        while i < @ratingInt  do #full star
+           @ratingHTML += "<span class=&quot;fa fa-star checked&quot;></span>"
+           i +=1
+        end
+        if @ratingInt < rating #half star
+            @ratingHTML += "<span class=&quot;fa fa-star-half checked&quot;></span>"
+        end
+        return @ratingHTML
+    end
+    
 end

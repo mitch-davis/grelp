@@ -3,6 +3,13 @@
 
 <head>
     <title>GRELP</title>
+    <!-- Font Awesome Icon Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    .checked {
+        color: gold;
+    }
+    </style>
 </head>
 
 <body>
@@ -16,8 +23,8 @@ Error: No Businesses Found
         <thead class="thead-default">
             <tr>
                 <th>Restaurant Name</th>
-                <th>rating</th>
-                <th>price</th>
+                <th>Rating</th>
+                <th>Price</th>
                 <th>Open?</th>
             </tr>
         </thead>
@@ -25,8 +32,8 @@ Error: No Businesses Found
             <% @businesses["businesses"].each do |item| %>
                 <tr>
                     <td><a href=""><%= item["name"]  %></a></td>
-                    <td><%= item["rating"] %></td>
-                    <td><%= item["price"] %></td>
+                    <td> <%= CGI.unescapeHTML(item["rating"]).html_safe %></td>
+                    <td><font color="#009933"><%= item["price"] %></font></td>
                     <td>Open Now</td>
                 </tr>
             <% end %>
