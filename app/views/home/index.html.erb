@@ -29,13 +29,14 @@
       // Sees if a cookie of the location already exists, if not create it
       var lat = readCookie("latitude");
       var lng = readCookie("longitude");
+      var type = readCookie("type");
       //console.log("Reading Cookie");
       
       if(lat && lng && lat != "undefined" && lng != "undefined") //If the cookie exists, continue
       {
         //console.log("Cookie Exists");
         document.getElementById("loadingId").style["display"] = "none";
-        document.getElementById("positionId").textContent="Position: True";
+        document.getElementById("positionId").textContent="Position: " + type;
         document.getElementById("cookieId").textContent="Cookie: True - " +lat +":" +lng;
       }
       else //Else, create it
@@ -105,21 +106,31 @@
     
     function setupLocation(position)
     {
-      if(!position.coords) //Setup default location
+      if(position.coords) //Setup exact location
       {
-        //console.log("Creating default: " +defaultUserPos.lat +":" +defaultUserPos.lng);
-        eraseCookie("latitude");
-        eraseCookie("longitude");
-        createCookie("latitude", defaultUserPos.lat, 0);
-        createCookie("longitude", defaultUserPos.lng, 0);
-      }
-      else //Setup from location provided
-      {
-        //console.log("Creating real: " +position.coords.latitude +":" +position.coords.longitude);
+        //console.log("Creating exact: " +defaultUserPos.lat +":" +defaultUserPos.lng);
         eraseCookie("latitude");
         eraseCookie("longitude");
         createCookie("latitude", position.coords.latitude, 0);
         createCookie("longitude", position.coords.longitude, 0);
+        createCookie("type", "Exact", 0);
+      }
+      else if( <%= request.location.latitude %> ) //Setup IP location
+      {
+        eraseCookie("latitude");
+        eraseCookie("longtidue");
+        createCookie("latitude", <%= request.location.latitude %>, 0);
+        createCookie("longitude", <%= request.location.longitude %>, 0);
+        createCookie("type", "IP", 0);
+      }
+      else //Setup default simulated location
+      {
+        //console.log("Creating simulated: " +position.coords.latitude +":" +position.coords.longitude);
+        eraseCookie("latitude");
+        eraseCookie("longitude");
+        createCookie("latitude", defaultUserPos.lat, 0);
+        createCookie("longitude", defaultUserPos.lng, 0);
+        createCookie("type", "Simulated", 0);
       }
       
       //console.log("Reloading Page");
@@ -257,7 +268,7 @@
     <p id="cookieId">Cookie: False</p>
   </div>
   <div id="loadingId">
-    <h1 style='text-align: center;'>LOADING PAGE...</h1>
+    <h1 style="text-align: center; padding-top: 200px">LOADING PAGE...</h1>
   </div>
   <div style='width: 100%; height: 100vh' class="map-section">
     <div id="map" style='width: 100%; height: 100%;'></div>
