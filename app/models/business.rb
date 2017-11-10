@@ -74,7 +74,7 @@ class Business
         @ratingInt = rating.floor
         i = 0
         while i < @ratingInt  do #full star
-           @ratingHTML += "<span class=&quot;fa fa-star checked&quot;></span>"
+           @ratingHTML += "<span class=&quot;fa fa-star checked&quot;></span> "
            i +=1
         end
         if @ratingInt < rating #half star
