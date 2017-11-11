@@ -4,5 +4,8 @@ Rails.application.routes.draw do
   get '/home/', to: 'home#index'
   get '/business/', to: 'yelp#index'
   get '/deals/', to: 'deals#index'
+  
+  resources :deals
+  post "/deals/new"    => "deals#new"
 
 end

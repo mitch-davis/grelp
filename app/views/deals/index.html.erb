@@ -1,39 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-    <div class="container" style=" padding-top: 50px">
-      <h2>Grelp Deals:</h2>
-      <table class="table table-bordered table-hover">
-        <thead class="thead-default">
-          <tr>
-            <th>Restaurant Name</th>
-            <th>Deal Description</th>
-            <th>Deal Code</th>
-            <th>Deal Restrictions</th>
-            <th>Expiration Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @deals.each do |deal| %>
-            <tr>
-              <td>
-                <%= deal[:Restaurant]  %>
-              </td>
-              <td>
-                <%= deal[:Value] %>
-              </td>
-              <td>
-                <%= deal[:Offer_Code] %>
-              </td>
-              <td>
-                <%= deal[:Restrictions] %>
-              </td>
-              <td>
-                <%= deal[:Exp_Date] %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+<head>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav">
+        <li class="active">
+          <a href="/" onclick="javascript:document.location.reload(true)" target="blank">Home</a>
+        </li>
+        <li>
+          <a href="/business/">Restaurants Near Me</a>
+        </li>
+        <li>
+          <a href="/deals/">Deals Near Me</a>
+        </li>
+      </ul>
     </div>
-  </body>  
-</html>
+  </nav>
+</head>
+<body>
+  <table class="table" id="deal">
+    <thead>
+      <tr>
+        <th>
+          <%= link_to "Restaurant Name", deals_path( sort_by: "Restaurant") %>
+        </th>
+        <th>
+          <%= link_to "Deal", deals_path( sort_by: "Offer_Code") %>
+        </th>
+        <th>
+          <%= link_to "Deal Code", deals_path( sort_by: "deal_code") %>
+        </th>
+        <th>
+          <%= link_to "Expiration Date", deals_path( sort_by: "Exp_Date") %>
+        </th>
+        <th>
+          <%= link_to "Deal Description", deals_path( sort_by: "Description") %>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @deals.each do |deal| %>
+        <tr>
+          <td>
+            <%= deal[:Restaurant] %>
+          </td>
+          <td>
+            <%= deal[:deal_title] %>
+          </td>
+          <td>
+            <%= deal[:Offer_Code] %>
+          </td>
+          <td>
+            <%= deal[:Exp_Date] %>
+          </td>
+          <td>
+            <%= link_to "More about deal", deal_path(deal) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <li>
+    <%= form_tag deals_path, :method => :get  do %>
+      Include:
+      <% @all_cuisines.each do |cuisine| %>
+        <%= cuisine %>
+        <%= check_box_tag "cuisines[#{cuisine}]", true,( @all_cuisines.include? cuisine), :id =>"cuisines[#{cuisine}]"  %>
+      <% end %>
+      <%= submit_tag 'Refresh'      %>
+    <% end %>
+  </li>
+  <%= button_to 'Create Deal', new_deal_path %>
+</body>
