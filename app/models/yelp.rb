@@ -70,6 +70,9 @@ class Yelp
     
     #generates the HTML for star icons based off of rating numeric
     def self.genRatingHTML rating
+        if rating < 1 or rating > 5
+            return ""
+        end
         @ratingHTML = ""
         @ratingInt = rating.floor
         i = 0
