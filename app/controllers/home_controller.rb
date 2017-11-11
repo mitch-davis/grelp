@@ -7,6 +7,6 @@ class HomeController < ApplicationController
         @businesses = Business.near @location
         @count = @businesses.count
         @attributes = Business.attributes
-      end
+     end
   
 end

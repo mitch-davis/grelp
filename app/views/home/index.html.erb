@@ -15,8 +15,14 @@
     var defaultUserPos = { lat: 38.905374, lng: -104.818371 }; // Default User location inside University Village
     var searchRange = 10000; // Set how far to "search". Later, we can implement to change this by user input.
     var handler; // Map
+    
+    //If an error occurs on this page, refresh. Fix for the Google API load error and Splash bug.
+    window.onerror = function(){
+      location.reload();
+    }
 
     $( document ).ready(function() {
+      //Checks API Issues
       if(handler == null)
       {
         handler = Gmaps.build('Google');
@@ -24,10 +30,38 @@
       else{
         window.location.reload();
       }
+      
+      // Sees if a cookie of the location already exists, if not create it
+      var lat = readCookie("latitude");
+      var lng = readCookie("longitude");
+      var type = readCookie("type");
+      //console.log("Reading Cookie");
+      
+      if(lat && lng && lat != "undefined" && lng != "undefined") //If the cookie exists, continue
+      {
+        //console.log("Cookie Exists");
+        document.getElementById("loadingId").style["display"] = "none";
+        document.getElementById("positionId").textContent="Position: " + type;
+        document.getElementById("cookieId").textContent="Cookie: True - " +lat +":" +lng;
+      }
+      else //Else, create it
+      {
+        //console.log("Cookie doesn't exist");
+        
+        if(navigator.geolocation)
+        {
+          navigator.geolocation.getCurrentPosition(setupLocation, setupLocation);
+        }
+        else{
+          setupLocation(defualtUserPos);
+        }
+      }
 
-      $('#HomeButton').click( function() { Destroy(); } );
-      $('#BusinessButton').click( function() { Destroy(); } );
-      $('#DealsButton').click( function() { Destroy(); } );
+      //$('#HomeButton').click( function() { Destroy(); } );
+      //$('#BusinessButton').click( function() { Destroy(); } );
+      //$('#DealsButton').click( function() { Destroy(); } );
+      
+      //Build Google Map
       handler.buildMap(
         {
           provider: {
@@ -41,27 +75,13 @@
         },
 
         function(){
-          // Get user location
-          if(navigator.geolocation) //If we can get their location, set their location
-          {
-            navigator.geolocation.getCurrentPosition(displayUserOnMap, displayUserOnMap);
-          }
-          else // If we can't set their location, just simulate it
-          {
-            displayUserOnMap( defaultUserPos );
-          }
+          // Show User location
+          displayUserOnMap(lat, lng);
 
           //Show Markers
-          var markers = handler.addMarkers(buildExample());
+          var markers = handler.addMarkers(buildMarkers());
           handler.bounds.extendWith(markers);
           handler.fitMapToBounds();
-
-          //Debug, display if a cookie exists of the user's location
-          var lat = readCookie("latitude");
-          var long = readCookie("longitude")
-          if (lat && long) {
-              document.getElementById("cookieId").textContent="Cookie: True - " + lat + long;
-          }
         }
       );
     });
@@ -89,7 +109,41 @@
 
     }
     
-    function buildExample()
+    function setupLocation(position)
+    {
+      if(position.coords) //Setup exact location
+      {
+        //console.log("Creating exact: " +defaultUserPos.lat +":" +defaultUserPos.lng);
+        eraseCookie("latitude");
+        eraseCookie("longitude");
+        createCookie("latitude", position.coords.latitude, 0);
+        createCookie("longitude", position.coords.longitude, 0);
+        createCookie("type", "Exact", 0);
+      }
+      else if( <%= request.location.latitude %> ) //Setup IP location
+      {
+        eraseCookie("latitude");
+        eraseCookie("longtidue");
+        createCookie("latitude", <%= request.location.latitude %>, 0);
+        createCookie("longitude", <%= request.location.longitude %>, 0);
+        createCookie("type", "IP", 0);
+      }
+      else //Setup default simulated location
+      {
+        //console.log("Creating simulated: " +position.coords.latitude +":" +position.coords.longitude);
+        eraseCookie("latitude");
+        eraseCookie("longitude");
+        createCookie("latitude", defaultUserPos.lat, 0);
+        createCookie("longitude", defaultUserPos.lng, 0);
+        createCookie("type", "Simulated", 0);
+      }
+      
+      //console.log("Reloading Page");
+      //Reload the page for Yelp
+      window.location.reload();
+    }
+    
+    function buildMarkers()
     {
       var list = <%= @businesses["businesses"].to_json.html_safe %>;
       //console.log(list);
@@ -138,51 +192,20 @@
       fitMapToBounds();
     }
 
-    function displayUserOnMap(position){
-      var lat, lng;
-
+    function displayUserOnMap(lat, lng){
       //Draw Person
-      if(position.coords){ // If we got a location
-        var userPos = handler.addMarker({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-          picture: {
-            url: icons["person"],
-            width: 64,
-            height: 64
-          },
-        });
-
-        lat = position.coords.latitude;
-        lng = position.coords.longitude;
-
-        document.getElementById("positionId").textContent="Position: True";
-      }
-      else{ //Default user to this location
-        var userPos = handler.addMarker({
-          lat: defaultUserPos.lat,
-          lng: defaultUserPos.lng,
-          picture: {
-            url: icons["person"],
-            width: 64,
-            height: 64
-          },
-        });
-
-        document.getElementById("positionId").textContent="Position: Simulated";
-
-        lat = defaultUserPos.lat;
-        lng = defaultUserPos.lng;
-      }
+      var userPos = handler.addMarker({
+        lat: lat,
+        lng: lng,
+        picture: {
+          url: icons["person"],
+          width: 64,
+          height: 64
+        },
+      });
 
       handler.bounds.extendWith(userPos);
       handler.fitMapToBounds();
-
-      //Create cookie with the user's location
-      eraseCookie("latitude");
-      eraseCookie("longitude")
-      createCookie("latitude", lat, 0);
-      createCookie("longitude", lng, 0)
 
       //Draw "Search" Range
       drawCircle(lat, lng, searchRange, "blue", 0.5, 2, "blue", 0.075);
@@ -248,6 +271,9 @@
   <div id="informationId" data-position="false" style="display: none; padding-top: 100px">
     <p id="positionId">Position: False</p>
     <p id="cookieId">Cookie: False</p>
+  </div>
+  <div id="loadingId">
+    <h1 style="text-align: center; padding-top: 200px">LOADING PAGE...</h1>
   </div>
   <div style='width: 100%; height: 100vh' class="map-section">
     <div id="map" style='width: 100%; height: 100%;'></div>
