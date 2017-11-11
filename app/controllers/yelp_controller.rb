@@ -1,6 +1,6 @@
 class YelpController < ApplicationController
   def index
-    @businesses = Business.near @location
+    @businesses = Yelp.near @location
     
     if params.key? "sort"
       case params["sort"]
@@ -28,10 +28,10 @@ class YelpController < ApplicationController
     end
     
     @count = @businesses.count
-    @attributes = Business.attributes
+    @attributes = Yelp.attributes
     @businesses["businesses"].each do |item|
       item["ratingNum"] = item["rating"]
-      item["rating"] = Business.genRatingHTML item["rating"] #convert rating float to HTML for star icons
+      item["rating"] = Yelp.genRatingHTML item["rating"] #convert rating float to HTML for star icons
     end
   end
 end

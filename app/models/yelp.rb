@@ -1,4 +1,4 @@
-class Business
+class Yelp
     require "json"
     require "http"
     require "optparse"
@@ -64,7 +64,7 @@ class Business
             longitude: longitude,
             limit: @@SEARCH_LIMIT
         }
-        response = HTTP.auth(Business.bearer_token).get(url, params: params)
+        response = HTTP.auth(Yelp.bearer_token).get(url, params: params)
         response.parse
     end
     
