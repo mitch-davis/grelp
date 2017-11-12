@@ -1,5 +1,5 @@
-
-# .simplecov
-SimpleCov.start 'rails' do
-  # any custom configs like groups and filters can be here at a central place
+# https://github.com/colszowka/simplecov#using-simplecov-for-centralized-config
+# Maybe put some conditional here not to execute the code below unless ENV['COVERAGE'] == 'true'
+SimpleCov.start do
+  @filters = []
 end
