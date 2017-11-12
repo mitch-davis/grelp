@@ -1,4 +1,4 @@
-class Business
+class Yelp
     require "json"
     require "http"
     require "optparse"
@@ -64,12 +64,15 @@ class Business
             longitude: longitude,
             limit: @@SEARCH_LIMIT
         }
-        response = HTTP.auth(Business.bearer_token).get(url, params: params)
+        response = HTTP.auth(Yelp.bearer_token).get(url, params: params)
         response.parse
     end
     
     #generates the HTML for star icons based off of rating numeric
     def self.genRatingHTML rating
+        if rating < 1 or rating > 5
+            return ""
+        end
         @ratingHTML = ""
         @ratingInt = rating.floor
         i = 0
