@@ -47,7 +47,7 @@ Error: No Businesses Found
         <tbody>
             <% @businesses["businesses"].each do |item| %>
                 <tr>
-                    <td><a href="/restaurant"><%= item["name"]  %></a></td>
+                    <td><a href="/restaurant?id=<%= item["id"] %>" ><%= item["name"]  %></a></td>
                     <td> <%= CGI.unescapeHTML(item["rating"]).html_safe %></td>
                     <td><font color="#009933"><%= item["price"] %></font></td>
                     <td>Open Now</td>

@@ -7,7 +7,41 @@
 
 <body>
 <div class="container" style=" padding-top: 50px">
-    <h2>This Restaurant:</h2>
+    <h1> <%= @restaurant["name"] %> </h1>
+    <h2> <%= "#{@restaurant["location"]["address1"]}, #{@restaurant["location"]["city"]}, #{@restaurant["location"]["state"]}" %> </h2>
+    <div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"> 
+            <%= "#{@reviews["reviews"][0]["rating"]} star review by #{@reviews["reviews"][0]["user"]["name"]}" %></a>
+      </h4>
+    </div>
+    <div id="collapse1" class="panel-collapse collapse in">
+      <div class="panel-body"></div>
+    </div> <%= "#{@reviews["reviews"][0]["text"]}" %> </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"> 
+            <%= "#{@reviews["reviews"][1]["rating"]} star review by #{@reviews["reviews"][1]["user"]["name"]}" %></a>
+      </h4>
+    </div>
+    <div id="collapse1" class="panel-collapse collapse in">
+      <div class="panel-body"></div>
+    </div> <%= "#{@reviews["reviews"][1]["text"]}" %> </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"> 
+            <%= "#{@reviews["reviews"][2]["rating"]} star review by #{@reviews["reviews"][2]["user"]["name"]}" %></a>
+      </h4>
+    </div>
+    <div id="collapse1" class="panel-collapse collapse in">
+      <div class="panel-body"></div>
+    </div> <%= "#{@reviews["reviews"][2]["text"]}" %> </div>
+  </div>
+</div>
 </div>
 </body>
 </html>
