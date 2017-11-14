@@ -18,11 +18,11 @@
     
     //If a specifc error occurs on this page, refresh. Fix for the Google API load error and Splash bug.
     window.onerror = function(error){
-      console.log("Error: " +error);
+      //console.log("Error: " +error);
       if( (error.indexOf('google') != -1) || (error.indexOf('Script error') != -1) )
       {
         location.reload();
-        console.log("Google API Error Found. Reloading Page");
+        //console.log("Google API Error Found. Reloading Page");
       }
     }
 
@@ -146,7 +146,7 @@
       }
       
       //Reload the page for Yelp
-      console.log("Cookies Made. Reloading Page");
+      //console.log("Cookies Made. Reloading Page");
       window.location.reload();
     }
     
