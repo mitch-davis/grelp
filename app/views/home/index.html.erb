@@ -19,7 +19,7 @@
     //If a specifc error occurs on this page, refresh. Fix for the Google API load error and Splash bug.
     window.onerror = function(error){
       //console.log("Error: " +error);
-      if(error.contains(google))
+      if(error.includes(" google"))
       {
         location.reload();
         console.log("Google API Error Found. Reloading Page");
