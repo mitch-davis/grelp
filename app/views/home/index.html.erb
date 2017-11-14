@@ -78,7 +78,7 @@
       else //Else, create it
       {
         //console.log("Cookie doesn't exist");
-        document.getElementById("loadingId").textContent="Loading Map. Please allow us to view your location.";
+        document.getElementById("loadingText").textContent="Loading Map. Please allow us to view your location.";
         if(navigator.geolocation)
         {
           navigator.geolocation.getCurrentPosition(setupLocation, setupLocation);
@@ -280,7 +280,7 @@
     <p id="cookieId">Cookie: False</p>
   </div>
   <div id="loadingId">
-    <h1 style="text-align: center; padding-top: 200px">LOADING PAGE...</h1>
+    <h1 id="loadingText" style="text-align: center; padding-top: 200px">LOADING PAGE...</h1>
   </div>
   <div style='width: 100%; height: 100vh' class="map-section">
     <div id="map" style='width: 100%; height: 100%;'></div>
