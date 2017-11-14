@@ -16,9 +16,14 @@
     var searchRange = 10000; // Set how far to "search". Later, we can implement to change this by user input.
     var handler; // Map
     
-    //If an error occurs on this page, refresh. Fix for the Google API load error and Splash bug.
-    window.onerror = function(){
-      location.reload();
+    //If a specifc error occurs on this page, refresh. Fix for the Google API load error and Splash bug.
+    window.onerror = function(error){
+      //console.log("Error: " +error);
+      if(error == "ReferenceError: google is not defined")
+      {
+        location.reload();
+        console.log("Error Found. Reload Page");
+      }
     }
 
     $( document ).ready(function() {
