@@ -22,7 +22,7 @@
       if(error == "ReferenceError: google is not defined")
       {
         location.reload();
-        console.log("Error Found. Reload Page");
+        console.log("Google API Error Found. Reloading Page");
       }
     }
 
@@ -48,11 +48,37 @@
         document.getElementById("loadingId").style["display"] = "none";
         document.getElementById("positionId").textContent="Position: " + type;
         document.getElementById("cookieId").textContent="Cookie: True - " +lat +":" +lng;
+        
+        console.log("Deploying Map");
+      
+        //Build Google Map
+        handler.buildMap(
+          {
+            provider: {
+              disableDefaultUI: true, // pass in other Google Maps API options here
+              mapTypeId: google.maps.MapTypeId.ROADMAP,
+              zoom: 15,
+              styles: mapStyle,
+              //types: ['restaurant']
+            },
+            internal: {id: 'map'}
+          },
+  
+          function(){
+            // Show User location
+            displayUserOnMap(lat, lng);
+  
+            //Show Markers
+            var markers = handler.addMarkers(buildMarkers());
+            handler.bounds.extendWith(markers);
+            handler.fitMapToBounds();
+          }
+        );
       }
       else //Else, create it
       {
         //console.log("Cookie doesn't exist");
-        
+        document.getElementById("loadingId").textContent="Loading Map. Please allow us to view your location.";
         if(navigator.geolocation)
         {
           navigator.geolocation.getCurrentPosition(setupLocation, setupLocation);
@@ -65,30 +91,6 @@
       //$('#HomeButton').click( function() { Destroy(); } );
       //$('#BusinessButton').click( function() { Destroy(); } );
       //$('#DealsButton').click( function() { Destroy(); } );
-      
-      //Build Google Map
-      handler.buildMap(
-        {
-          provider: {
-            disableDefaultUI: true, // pass in other Google Maps API options here
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            zoom: 15,
-            styles: mapStyle,
-            //types: ['restaurant']
-          },
-          internal: {id: 'map'}
-        },
-
-        function(){
-          // Show User location
-          displayUserOnMap(lat, lng);
-
-          //Show Markers
-          var markers = handler.addMarkers(buildMarkers());
-          handler.bounds.extendWith(markers);
-          handler.fitMapToBounds();
-        }
-      );
     });
 
     function Destroy()
