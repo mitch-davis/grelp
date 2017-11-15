@@ -190,7 +190,9 @@
     { //"Panera Bread <img src='%= asset_path('panera_bread.png') %>' width='90' height='140'> Meh it's alright."),
       var name = "<center><h2>" + item["name"] + "</h2></center>";
       imagePath = "<p><center><img src= '" +item["image_url"] +"' width='150' height='140'></center></p>";
-      var content = "<center><table>" + "<tr><td><b>Rating:</b></td><td>"+item["rating"]+"</td></tr>" + "<tr><td><b>Price:</b></td><td>"+item["price"]+"</td></tr>" + "<tr><td><b> <a href=\"/restaurant?id=" +item["id"] +"\">View</a> </b></td></tr>" + "</table></center>";
+      var content = "<center><table style=\"width:\">" + "<tr><td><b>Rating:</b></td><td>"+item["rating"]+" Stars</td></tr>"
+      content += "<tr><td><b>Price:</b></td><td>"+item["price"]+"</td></tr>" + "</table></center>";
+      content += "<center><h4><b> <a href=\"/restaurant?id=" +item["id"] +"\">View</a> </b></h4></center>";
       return name + imagePath + content;
     }
 
