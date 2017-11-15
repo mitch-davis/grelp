@@ -41,7 +41,7 @@
       
       if(lat && lng && lat != "undefined" && lng != "undefined") //If the cookie exists, continue
       {
-        document.getElementById("loadingId").style["display"] = "none";
+        document.getElementById("loadingText").style["display"] = "none";
         document.getElementById("positionId").textContent="Position: " + type;
         document.getElementById("cookieId").textContent="Cookie: True - " +lat +":" +lng;
       
@@ -228,10 +228,8 @@
     <p id="positionId">Position: False</p>
     <p id="cookieId">Cookie: False</p>
   </div>
-  <div id="loadingId">
-    <h1 id="loadingText" style="text-align: center; padding-top: 200px">Setting Up Map...</h1>
-  </div>
   <div style='width: 100%; height: 100vh; padding-top: 50px;' class="map-section">
+    <h1 id="loadingText" style="top: 50%; left: 50%; position: absolute; transform: translateX(-50%) translateY(-50%);">Setting Up Map...</h1>
     <div id="map" style='width: 100%; height: 100%;'></div>
   </div>
 </body>
