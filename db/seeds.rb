@@ -6,7 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-
 deals = [{:Restaurant => 'Panera Bread', :deal_title => 'HALF50', :Offer_Code => 'GF35-34T',:lat => '38.8054031', :long => '-104.82162349999999', :Exp_Date => '12/15/17', :Description => 'Get 20% off orders over $20, Monday-Friday', :Restrictions => 'Only available at some stores, and only valid from 2-6pm. Only one deal valid at a time',:cuisine => 'American'},
          {:Restaurant => 'Panera Bread', :deal_title => 'OFF10', :Offer_Code => 'GF35-34T', :lat => '38.8054031', :long => '-104.82162349999999', :Exp_Date => '2/01/18',:Description => '10% off all order using quickpay starting after 6', :Restrictions => 'Only valid for one entree/order.', :cuisine => 'American'  },
          {:Restaurant => 'Panera Bread', :deal_title => '5TOGO', :Offer_Code => 'GF35-34T',:lat => '38.9043423', :long => '-104.81830939999998', :Exp_Date => '11/20/17', :Description => '$5 of online orders over $10', :Restrictions => 'To-go only, can only use with a membership and only valid 4 times a month', :cuisine => 'American'},
@@ -21,6 +20,7 @@ deals = [{:Restaurant => 'Panera Bread', :deal_title => 'HALF50', :Offer_Code =>
          {:Restaurant => 'Texas Roadhouse', :deal_title => 'Early Dinner', :Offer_Code => 'Early06',:lat => '38.8767288', :long => '-104.72085429999998', :Exp_Date => '12/28/17', :Description => '11 different entrees from 4 - 6pm ', :Restrictions => 'Not available on holidays and no other offers valid with offer', :cuisine => 'Thai'},
         ]
         
+
 
 
 

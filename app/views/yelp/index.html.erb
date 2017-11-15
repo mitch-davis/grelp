@@ -24,30 +24,30 @@ Error: No Businesses Found
             <tr>
                 
                 <% if(params["sort"].eql? "restaurantA") %>
-                    <th><a href="/business?sort=restaurantZ">Restaurant Name</a></th>
+                    <th><a href="/businesses?sort=restaurantZ">Restaurant Name</a></th>
                 <% else %>
-                    <th><a href="/business?sort=restaurantA">Restaurant Name</a></th>
+                    <th><a href="/businesses?sort=restaurantA">Restaurant Name</a></th>
                 <% end %>
                 
                 <% if(params["sort"].eql? "ratingMax") %>
-                    <th><a href="/business?sort=ratingMin">Rating</a></th>
+                    <th><a href="/businesses?sort=ratingMin">Rating</a></th>
                 <% else %>
-                    <th><a href="/business?sort=ratingMax">Rating</a></th>
+                    <th><a href="/businesses?sort=ratingMax">Rating</a></th>
                 <% end %>
                 
                  <% if(params["sort"].eql? "priceMin") %>
-                    <th><a href="/business?sort=priceMax">Price</a></th>
+                    <th><a href="/businesses?sort=priceMax">Price</a></th>
                 <% else %>
-                    <th><a href="/business?sort=priceMin">Price</a></th>
+                    <th><a href="/businesses?sort=priceMin">Price</a></th>
                 <% end %>
                 
-                <th><a href="/business">Open?</a></th>
+                <th><a href="/businesses">Open?</a></th>
             </tr>
         </thead>
         <tbody>
             <% @businesses["businesses"].each do |item| %>
                 <tr>
-                    <td><a href=""><%= item["name"]  %></a></td>
+                    <td><a href="/restaurant?id=<%= item["id"] %>" ><%= item["name"]  %></a></td>
                     <td> <%= CGI.unescapeHTML(item["rating"]).html_safe %></td>
                     <td><font color="#009933"><%= item["price"] %></font></td>
                     <td>Open Now</td>

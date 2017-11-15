@@ -15,4 +15,11 @@ class Deal < ApplicationRecord
     def self.randomCode
        return (0...8).map { (65 + rand(26)).chr }.join
     end
+    
+    def self.getDealsByName name
+        #we will do some matching in the database here to pull deals with the incoming name
+        #mock deal for now...
+        return [{:name => "20% off", :description => "20% off any purchase", :code => "12345", :expire => "12/5/17"}]
+    end
+    
 end

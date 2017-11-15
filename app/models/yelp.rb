@@ -36,6 +36,28 @@ class Yelp
         return @@CLIENT_ID
     end
     
+    def self.getRestaurantByID id
+        url = "https://api.yelp.com/v3/businesses/" + id
+        params = {
+            
+        }
+        
+        response = HTTP.auth(Yelp.bearer_token).get(url, params: params)
+        response.parse
+    end
+    
+    def self.getReviewByID id
+        
+        url = "https://api.yelp.com/v3/businesses/" + id + "/reviews"
+        params = {
+            
+        }
+        
+        response = HTTP.auth(Yelp.bearer_token).get(url, params: params)
+        response.parse
+        
+    end
+    
     def self.bearer_token
         # Put the url together
         url = "#{@@API_HOST}#{@@TOKEN_PATH}"
