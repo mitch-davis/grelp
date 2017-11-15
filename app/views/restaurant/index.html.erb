@@ -1,47 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <title>GRELP</title>
+  <title>GRELP</title>
+  <!-- Font Awesome Icon Library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+  <style>
+  .checked {
+      color: gold;
+  }
+  </style>
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-
 <body>
+
 <div class="container" style=" padding-top: 50px">
-    <h1> <%= @restaurant["name"] %> </h1>
-    <h2> <%= "#{@restaurant["location"]["address1"]}, #{@restaurant["location"]["city"]}, #{@restaurant["location"]["state"]}" %> </h2>
-    <div class="panel-group" id="accordion">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"> 
-            <%= "#{@reviews["reviews"][0]["rating"]} star review by #{@reviews["reviews"][0]["user"]["name"]}" %></a>
-      </h4>
+  <h1> <%= @restaurant["name"] %> </h1>
+  <h2> <%= "#{@restaurant["location"]["address1"]}, #{@restaurant["location"]["city"]}, #{@restaurant["location"]["state"]}" %> </h2>
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Coupons</a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse in">
+        <div class="panel-body">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-default">
+                    <tr>
+                        <th>Deal Name</th>
+                        <th>Deal Description</th>
+                        <th>Offer Code</th>
+                        <th>Expiration Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @coupons.each do |deal| %>
+                        <tr>
+                            <td><%= deal[:name] %></td>
+                            <td><%= deal[:description] %></td>
+                            <td><%= deal[:code] %></td>
+                            <td><%= deal[:expire] %></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+      </div>
     </div>
-    <div id="collapse1" class="panel-collapse collapse in">
-      <div class="panel-body"></div>
-    </div> <%= "#{@reviews["reviews"][0]["text"]}" %> </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"> 
-            <%= "#{@reviews["reviews"][1]["rating"]} star review by #{@reviews["reviews"][1]["user"]["name"]}" %></a>
-      </h4>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+              <%= "Review by #{@reviews["reviews"][0]["user"]["name"]} (" %> <%= CGI.unescapeHTML(@reviews["reviews"][0]["rating"]).html_safe %> )
+          </a>
+        </h4>
+      </div>
+      <div id="collapse2" class="panel-collapse collapse">
+        <div class="panel-body"><%= "#{@reviews["reviews"][0]["text"]}" %></div>
+      </div>
     </div>
-    <div id="collapse1" class="panel-collapse collapse in">
-      <div class="panel-body"></div>
-    </div> <%= "#{@reviews["reviews"][1]["text"]}" %> </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"> 
-            <%= "#{@reviews["reviews"][2]["rating"]} star review by #{@reviews["reviews"][2]["user"]["name"]}" %></a>
-      </h4>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+              <%= "Review by #{@reviews["reviews"][1]["user"]["name"]} (" %> <%= CGI.unescapeHTML(@reviews["reviews"][1]["rating"]).html_safe %> )
+          </a>
+        </h4>
+      </div>
+      <div id="collapse3" class="panel-collapse collapse">
+        <div class="panel-body"><%= "#{@reviews["reviews"][1]["text"]}" %></div>
+      </div>
     </div>
-    <div id="collapse1" class="panel-collapse collapse in">
-      <div class="panel-body"></div>
-    </div> <%= "#{@reviews["reviews"][2]["text"]}" %> </div>
-  </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+              <%= "Review by #{@reviews["reviews"][2]["user"]["name"]} (" %> <%= CGI.unescapeHTML(@reviews["reviews"][2]["rating"]).html_safe %> )
+          </a>
+        </h4>
+      </div>
+      <div id="collapse4" class="panel-collapse collapse">
+        <div class="panel-body"><%= "#{@reviews["reviews"][2]["text"]}" %></div>
+      </div>
+    </div>
+  </div> 
 </div>
-</div>
+    
 </body>
 </html>
