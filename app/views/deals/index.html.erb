@@ -8,16 +8,32 @@
     <thead class="thead-default">
       <tr>
         <th>
-          <%= link_to "Restaurant Name", deals_path( sort_by: "Restaurant") %>
+          <% if(params["sort_by"].eql? "RestaurantA") then %>
+            <%= link_to "Restaurant Name", deals_path( sort_by: "RestaurantZ") %>
+          <% else %>
+            <%= link_to "Restaurant Name", deals_path( sort_by: "RestaurantA") %>
+          <% end %>
         </th>
         <th>
-          <%= link_to "Deal", deals_path( sort_by: "Offer_Code") %>
+          <% if(params["sort_by"].eql? "Offer_CodeA") then %>  
+            <%= link_to "Deal", deals_path( sort_by: "Offer_CodeZ") %>
+          <% else %>
+            <%= link_to "Deal", deals_path( sort_by: "Offer_CodeA") %>
+          <% end %>
         </th>
         <th>
-          <%= link_to "Deal Code", deals_path( sort_by: "deal_code") %>
+          <% if(params["sort_by"].eql? "Deal_codeA") then %>
+            <%= link_to "Deal Code", deals_path( sort_by: "Deal_codeZ") %>
+          <% else %>
+            <%= link_to "Deal Code", deals_path( sort_by: "Deal_codeA") %>
+          <% end %>
         </th>
         <th>
-          <%= link_to "Expiration Date", deals_path( sort_by: "Exp_Date") %>
+          <% if(params["sort_by"].eql? "Exp_DateShort") then %>
+            <%= link_to "Expiration Date", deals_path( sort_by: "Exp_DateLong") %>
+          <% else %>
+            <%= link_to "Expiration Date", deals_path( sort_by: "Exp_DateShort") %>
+          <% end %>
         </th>
         <th>
           <%= link_to "Deal Description", deals_path( sort_by: "Description") %>

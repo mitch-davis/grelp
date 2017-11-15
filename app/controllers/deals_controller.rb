@@ -16,11 +16,22 @@ class DealsController < ApplicationController
         
         if params.key? "sort_by"
           case params["sort_by"]
-            when "Restaurant"
-              #@deals = @deals.sort_by(:Restaurant)
-            when "Offer_Code"
-            when "deal_code"
-            when "Exp_Type"
+            when "RestaurantA"
+              @deals = @deals.order(:Restaurant)
+            when "RestaurantZ"
+              @deals = @deals.order(:Restaurant).reverse
+            when "Offer_CodeA"
+              @deals = @deals.order(:deal_title)
+            when "Offer_CodeZ"
+              @deals = @deals.order(:deal_title).reverse
+            when "Deal_codeA"
+              @deals = @deals.order(:Offer_Code)
+            when "Deal_codeZ"
+              @deals = @deals.order(:Offer_Code).reverse
+            when "Exp_TypeShort"
+              @deals = @deals.order(:Exp_Date)
+            when "Exp_DateLong"
+              @deals = @deals.order(:Exp_Date).reverse
           end
         end
         
