@@ -21,6 +21,23 @@ RSpec.describe Yelp, type: :model do
             expect(Yelp.genRatingHTML(1.5)).to eq "<span class=&quot;fa fa-star checked&quot;></span> <span class=&quot;fa fa-star-half checked&quot;></span>"
             expect(Yelp.genRatingHTML(-1)).to eq ""
         end
-        
+  end
+  
+  describe "getRestaurantByID" do
+      it "should return a restaurant" do
+          expect(Yelp.getRestaurantByID("719-gastropub-colorado-springs-2")).to be_a_kind_of Hash
+          expect(Yelp.getRestaurantByID("719-gastropub-colorado-springs-2")["name"]).to be_a_kind_of String
+      end
+      
+      it "should return the correct restaurant" do
+          expect(Yelp.getRestaurantByID("719-gastropub-colorado-springs-2")["name"]).to eq "719 Gastropub"
+      end
+  end
+  
+  describe "getReviewByID" do
+      it "should return a review" do
+          expect(Yelp.getReviewByID("719-gastropub-colorado-springs-2")).to be_a_kind_of Hash
+          expect(Yelp.getReviewByID("719-gastropub-colorado-springs-2")["reviews"]).to be_a_kind_of Array
+      end
   end
 end
