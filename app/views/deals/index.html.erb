@@ -1,23 +1,11 @@
 <head>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <ul class="nav navbar-nav">
-        <li class="active">
-          <a href="/" onclick="javascript:document.location.reload(true)" target="blank">Home</a>
-        </li>
-        <li>
-          <a href="/businesses/">Restaurants Near Me</a>
-        </li>
-        <li>
-          <a href="/deals/">Deals Near Me</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+
 </head>
 <body>
-  <table class="table" id="deal">
-    <thead>
+  <div class = "container" style=" padding-top: 50px">
+  <h2>Deals:</h2>
+  <table class="table table-bordered table-hover" id="deal">
+    <thead class="thead-default">
       <tr>
         <th>
           <%= link_to "Restaurant Name", deals_path( sort_by: "Restaurant") %>
@@ -69,4 +57,5 @@
     <% end %>
   </li>
   <%= button_to 'Create Deal', new_deal_path %>
+  </div>
 </body>

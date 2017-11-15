@@ -13,6 +13,17 @@ class DealsController < ApplicationController
         @deals = Deal.all
         @deals 
         @all_cuisines = Deal.get_cuisines
+        
+        if params.key? "sort_by"
+          case params["sort_by"]
+            when "Restaurant"
+              #@deals = @deals.sort_by(:Restaurant)
+            when "Offer_Code"
+            when "deal_code"
+            when "Exp_Type"
+          end
+        end
+        
   end
     
   def create
