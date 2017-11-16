@@ -23,7 +23,6 @@
         location.reload();
       }
     }
-
     $( document ).ready(function() {
       //Checks API Issues
       if(handler == null)
@@ -118,7 +117,6 @@
       var list = <%= @businesses["businesses"].to_json.html_safe %>;
       //console.log(list);
       var markerList = new Array();
-
       list.forEach(function(item) {
           var mark = buildMarker( item, icons["dining"], buildInfo(item) );
           markerList.push(mark);
@@ -140,14 +138,11 @@
         infowindow: info
       }
     }
-
     function displayMarkersOnMap(markers){
       var marker = handler.addMarkers(markers);
-
       handler.bounds.extendWith(marker);
       fitMapToBounds();
     }
-
     function displayUserOnMap(lat, lng){
       //Draw Person
       var userPos = handler.addMarker({
@@ -159,14 +154,11 @@
           height: 64
         },
       });
-
       handler.bounds.extendWith(userPos);
       handler.fitMapToBounds();
-
       //Draw "Search" Range
       drawCircle(lat, lng, searchRange, "blue", 0.5, 2, "blue", 0.075);
     };
-
     function drawCircle(latitude, longitude, radius, strokeColor, strokeOpacity, strokeWeight,
       fillColor, fillOpacity)
     {
@@ -193,7 +185,6 @@
       var content = " <tr>" + "<td><b>Rating:</b> "+item["rating"]+"</td>" + "   <td><b>Price:</b> "+item["price"]+"</td>" + "   <td><b> <a href=\"/restaurant?id=" +item["id"] +"\">View</a> </b></td>" + " </tr>";
       return name + imagePath + content;
     }
-
     //Ref: https://www.quirksmode.org/js/cookies.html
     function createCookie(name,value,days) {
       var expires = "";
@@ -204,7 +195,6 @@
       }
       document.cookie = name + "=" + value + expires + "; path=/";
     }
-
     function readCookie(name) {
         var nameEQ = name + "=";
         var ca = document.cookie.split(';');
@@ -215,7 +205,6 @@
         }
         return null;
     }
-
     function eraseCookie(name) {
         createCookie(name,"",-1);
     }
