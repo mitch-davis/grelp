@@ -1,35 +1,39 @@
 <head>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <ul class="nav navbar-nav">
-        <li class="active">
-          <a href="/" onclick="javascript:document.location.reload(true)" target="blank">Home</a>
-        </li>
-        <li>
-          <a href="/businesses/">Restaurants Near Me</a>
-        </li>
-        <li>
-          <a href="/deals/">Deals Near Me</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+
 </head>
 <body>
-  <table class="table" id="deal">
-    <thead>
+  <div class = "container" style=" padding-top: 50px">
+  <h2>Deals:</h2>
+  <table class="table table-bordered table-hover" id="deal">
+    <thead class="thead-default">
       <tr>
         <th>
-          <%= link_to "Restaurant Name", deals_path( sort_by: "Restaurant") %>
+          <% if(params["sort_by"].eql? "RestaurantA") then %>
+            <%= link_to "Restaurant Name", deals_path( sort_by: "RestaurantZ") %>
+          <% else %>
+            <%= link_to "Restaurant Name", deals_path( sort_by: "RestaurantA") %>
+          <% end %>
         </th>
         <th>
-          <%= link_to "Deal", deals_path( sort_by: "Offer_Code") %>
+          <% if(params["sort_by"].eql? "Offer_CodeA") then %>  
+            <%= link_to "Deal", deals_path( sort_by: "Offer_CodeZ") %>
+          <% else %>
+            <%= link_to "Deal", deals_path( sort_by: "Offer_CodeA") %>
+          <% end %>
         </th>
         <th>
-          <%= link_to "Deal Code", deals_path( sort_by: "deal_code") %>
+          <% if(params["sort_by"].eql? "Deal_codeA") then %>
+            <%= link_to "Deal Code", deals_path( sort_by: "Deal_codeZ") %>
+          <% else %>
+            <%= link_to "Deal Code", deals_path( sort_by: "Deal_codeA") %>
+          <% end %>
         </th>
         <th>
-          <%= link_to "Expiration Date", deals_path( sort_by: "Exp_Date") %>
+          <% if(params["sort_by"].eql? "Exp_DateShort") then %>
+            <%= link_to "Expiration Date", deals_path( sort_by: "Exp_DateLong") %>
+          <% else %>
+            <%= link_to "Expiration Date", deals_path( sort_by: "Exp_DateShort") %>
+          <% end %>
         </th>
         <th>
           <%= link_to "Deal Description", deals_path( sort_by: "Description") %>
@@ -69,4 +73,5 @@
     <% end %>
   </li>
   <%= button_to 'Create Deal', new_deal_path %>
+  </div>
 </body>
