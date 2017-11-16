@@ -40,7 +40,7 @@
       
       if(lat && lng && lat != "undefined" && lng != "undefined") //If the cookie exists, continue
       {
-        document.getElementById("loadingId").style["display"] = "none";
+        document.getElementById("loadingText").style["display"] = "none";
         document.getElementById("positionId").textContent="Position: " + type;
         document.getElementById("cookieId").textContent="Cookie: True - " +lat +":" +lng;
       
@@ -180,9 +180,11 @@
     
     function buildInfo(item)
     { //"Panera Bread <img src='%= asset_path('panera_bread.png') %>' width='90' height='140'> Meh it's alright."),
-      var name = "<h2>" + item["name"] + "</h2> ";
-      imagePath = "<p><c><img src= '" +item["image_url"] +"' width='150' height='140'></c></p>";
-      var content = " <tr>" + "<td><b>Rating:</b> "+item["rating"]+"</td>" + "   <td><b>Price:</b> "+item["price"]+"</td>" + "   <td><b> <a href=\"/restaurant?id=" +item["id"] +"\">View</a> </b></td>" + " </tr>";
+      var name = "<center><h2>" + item["name"] + "</h2></center>";
+      imagePath = "<p><center><img src= '" +item["image_url"] +"' width='150' height='140'></center></p>";
+      var content = "<center><table style=\"width:\">" + "<tr><td><b>Rating:</b></td><td>"+item["rating"]+" Stars</td></tr>"
+      content += "<tr><td><b>Price:</b></td><td>"+item["price"]+"</td></tr>" + "</table></center>";
+      content += "<center><h4><b> <a href=\"/restaurant?id=" +item["id"] +"\">View</a> </b></h4></center>";
       return name + imagePath + content;
     }
     //Ref: https://www.quirksmode.org/js/cookies.html
@@ -217,10 +219,8 @@
     <p id="positionId">Position: False</p>
     <p id="cookieId">Cookie: False</p>
   </div>
-  <div id="loadingId">
-    <h1 id="loadingText" style="text-align: center; padding-top: 200px">Setting Up Map...</h1>
-  </div>
-  <div style='width: 100%; height: 100vh' class="map-section">
+  <div style='width: 100%; height: 100vh; padding-top: 50px;' class="map-section">
+    <h1 id="loadingText" style="top: 50%; left: 50%; position: absolute; transform: translateX(-50%) translateY(-50%);">Setting Up Map...</h1>
     <div id="map" style='width: 100%; height: 100%;'></div>
   </div>
 </body>
