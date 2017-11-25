@@ -23,9 +23,17 @@ class YelpController < ApplicationController
         @businesses["businesses"] = @businesses["businesses"].sort_by{ |k| k["price"].to_s } #lowest price first
       when "priceMax"
         @businesses["businesses"] = @businesses["businesses"].sort_by{ |k| k["price"].to_s }.reverse #highest price first
+      
+      #BY NUMDEALS ------------------------------------------------------------------------
+      
+      when "numMin"
+        @businesses["businesses"] = @businesses["businesses"].sort_by{ |k| k["numDeals"].to_s } #lowest price first
+      when "numMax"
+        @businesses["businesses"] = @businesses["businesses"].sort_by{ |k| k["numDeals"].to_s }.reverse #highest price first
       end
       
     end
+    
     @count = @businesses.count
     @attributes = Yelp.attributes
     @businesses["businesses"].each do |item|
