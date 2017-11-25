@@ -26,12 +26,12 @@ class YelpController < ApplicationController
       end
       
     end
-  
     @count = @businesses.count
     @attributes = Yelp.attributes
     @businesses["businesses"].each do |item|
       item["ratingNum"] = item["rating"]
       item["rating"] = Yelp.genRatingHTML item["rating"] #convert rating float to HTML for star icons
+      item["numDeals"] = Deal.where(:ID => item["id"]).length
     end
   end
 end
