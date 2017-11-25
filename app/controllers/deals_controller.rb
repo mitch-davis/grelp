@@ -1,6 +1,6 @@
 class DealsController < ApplicationController
   def deal_params
-    params.require(:deal).permit(:Restaurant, :deal_title, :Offer_Code, :lat, :long, :Exp_Date, :Description, :Restrictions)
+    params.require(:deal).permit(:Restaurant, :ID, :Deal_Title, :Offer_Code, :Exp_Date, :Description, :Restrictions)
   end
   
   def show
@@ -11,8 +11,7 @@ class DealsController < ApplicationController
   
   def index
         @deals = Deal.all
-        @deals 
-        @all_cuisines = Deal.get_cuisines
+        #@all_cuisines = Deal.get_cuisines
         
         if params.key? "sort_by"
           case params["sort_by"]
@@ -21,9 +20,9 @@ class DealsController < ApplicationController
             when "RestaurantZ"
               @deals = @deals.order(:Restaurant).reverse
             when "Offer_CodeA"
-              @deals = @deals.order(:deal_title)
+              @deals = @deals.order(:Deal_Title)
             when "Offer_CodeZ"
-              @deals = @deals.order(:deal_title).reverse
+              @deals = @deals.order(:Deal_Title).reverse
             when "Deal_codeA"
               @deals = @deals.order(:Offer_Code)
             when "Deal_codeZ"
@@ -53,5 +52,5 @@ class DealsController < ApplicationController
    def new
     # default: render 'new' template
     
-  end
+   end
 end

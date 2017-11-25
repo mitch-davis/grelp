@@ -17,14 +17,12 @@ ActiveRecord::Schema.define(version: 20171114212959) do
 
   create_table "deals", force: :cascade do |t|
     t.string "Restaurant"
-    t.string "deal_title"
+    t.string "ID"
+    t.string "Deal_Title"
     t.string "Offer_Code"
-    t.string "lat"
-    t.string "long"
     t.string "Exp_Date"
     t.string "Description"
     t.string "Restrictions"
-    t.string "cuisine"
   end
 
   create_table "posts", force: :cascade do |t|

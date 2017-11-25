@@ -108,4 +108,15 @@ class Yelp
         return @ratingHTML
     end
     
+    #def self.genRandomDeals restaurants
+     #  @all_deals = ""
+      # @deal_num = 0
+       #restaurants["businesses"].each do |this|
+        #@deal_num += 1
+        #@percent = (((rand % 5) + 1) * 10).floor
+        #@all_deals += "{:Restaurant => '#{this["name"]}', :ID => '#{this["id"]}', :Deal_Title => '#{@percent}% Off', :Offer_Code => 'PCTOFF#{@deal_num}', :Exp_Date => '6/15/18', :Description => '#{@percent}% off any purchase', :Restrictions => 'Only valid for one purchase'}, \n"
+       #end
+       #return @all_deals
+    #end
+    
 end

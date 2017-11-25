@@ -21,5 +21,5 @@ class Deal < ApplicationRecord
         #mock deal for now...
         return [{:name => "20% off", :description => "20% off any purchase", :code => "12345", :expire => "12/5/17"}]
     end
-    
+
 end

@@ -26,7 +26,7 @@ class YelpController < ApplicationController
       end
       
     end
-    
+  
     @count = @businesses.count
     @attributes = Yelp.attributes
     @businesses["businesses"].each do |item|
