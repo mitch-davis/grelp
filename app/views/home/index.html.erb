@@ -23,15 +23,12 @@
         window.location.reload();
       }
     }
+    
     $( document ).ready(function() {
       //Checks API Issues
       if(handler == null)
       {
         handler = Gmaps.build('Google');
-      }
-      else{
-        console.log("Handler Error. Refreshing.");
-        window.location.reload();
       }
       
       // Grabs the cookie if it can
