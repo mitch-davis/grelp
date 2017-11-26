@@ -11,7 +11,6 @@
       dining: iconBase + 'dining.png',
       coffee: iconBase + 'coffee.png',
     };
-    var defaultUserPos = { lat: 38.905374, lng: -104.818371 }; // Default User location inside University Village
     var searchRange = 10000; // Set how far to "search". Later, we can implement to change this by user input.
     var handler; // Map
     
@@ -33,7 +32,7 @@
         window.location.reload();
       }
       
-      // Sees if a cookie of the location already exists, if not create it
+      // Grabs the cookie if it can
       var lat = readCookie("latitude");
       var lng = readCookie("longitude");
       var type = readCookie("type");
@@ -68,7 +67,7 @@
           }
         );
       }
-      else //Else, create it
+      else //Else, wait for the cookie script to create
       {
         document.getElementById("loadingText").textContent="Setting Up Map. For accurate results, please let us use your location.";
       }

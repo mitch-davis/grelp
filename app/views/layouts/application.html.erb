@@ -23,11 +23,11 @@
       
       if( (!lat && !lng) || (lat == "undefined" && lng == "undefined") ) //If the cookie doesn't exist, create it
       {
-        if(navigator.geolocation)
+        if(navigator.geolocation) // Location (GPS or IP) given
         {
           navigator.geolocation.getCurrentPosition(setupLocation, setupLocation);
         }
-        else{
+        else{ // Something happened so we're placing them at the default spot
           setupLocation(defualtUserPos);
         }
       }
@@ -59,7 +59,7 @@
           createCookie("type", "Simulated", 0);
         }
         
-        //Reload the page for Yelp
+        //Reload the page so models can get cookie
         window.location.reload();
       }
     
