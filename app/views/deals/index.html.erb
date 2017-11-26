@@ -8,17 +8,17 @@
     <thead class="thead-default">
       <tr>
         <th>
-          <% if(params["sort_by"].eql? "RestaurantA") then %>
-            <%= link_to "Restaurant Name", deals_path( sort_by: "RestaurantZ") %>
-          <% else %>
-            <%= link_to "Restaurant Name", deals_path( sort_by: "RestaurantA") %>
-          <% end %>
-        </th>
-        <th>
           <% if(params["sort_by"].eql? "Offer_CodeA") then %>  
             <%= link_to "Deal", deals_path( sort_by: "Offer_CodeZ") %>
           <% else %>
             <%= link_to "Deal", deals_path( sort_by: "Offer_CodeA") %>
+          <% end %>
+        </th>
+        <th>
+          <% if(params["sort_by"].eql? "RestaurantA") then %>
+            <%= link_to "Restaurant Name", deals_path( sort_by: "RestaurantZ") %>
+          <% else %>
+            <%= link_to "Restaurant Name", deals_path( sort_by: "RestaurantA") %>
           <% end %>
         </th>
         <th>
@@ -44,10 +44,10 @@
       <% @deals.each do |deal| %>
         <tr>
           <td>
-            <%= deal[:Restaurant] %>
+            <%= deal[:Deal_Title] %>
           </td>
           <td>
-            <%= deal[:deal_title] %>
+            <a href="/restaurant?id=<%= deal[:ID] %>" ><%= deal[:Restaurant] %></a>
           </td>
           <td>
             <%= deal[:Offer_Code] %>
@@ -62,16 +62,6 @@
       <% end %>
     </tbody>
   </table>
-  <li>
-    <%= form_tag deals_path, :method => :get  do %>
-      Include:
-      <% @all_cuisines.each do |cuisine| %>
-        <%= cuisine %>
-        <%= check_box_tag "cuisines[#{cuisine}]", true,( @all_cuisines.include? cuisine), :id =>"cuisines[#{cuisine}]"  %>
-      <% end %>
-      <%= submit_tag 'Refresh'      %>
-    <% end %>
-  </li>
   <%= button_to 'Create Deal', new_deal_path %>
   </div>
 </body>

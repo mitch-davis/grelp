@@ -1,16 +1,18 @@
-<h1>Create New Deal</h1>
-<%= form_tag deals_path do %>
-  <%= label :deal, :Restaurant, 'Restaurant' %>
-  <%= text_field(:deal, 'Restaurant', size: 20) %>
-  <%= label :deal, :deal_title, 'Deal Title' %>
-  <%= text_field(:deal, 'Deal Title') %>
-  <%= label :deal, :Exp_Date, 'Expiration Date' %>
-  <%= text_field(:deal, 'Expiration Date') %>
-  <%= label :deal, :Description, 'Deal Description' %>
-  <%= text_field(:deal, 'Deal Description', size: 75) %>
-  <%= label :deal, :Restrictions, 'Deal Restrictions' %>
-  <%= text_field(:deal, 'Deal Restrictions', size: 75) %>
-  <%= label :deal, :Offer_Code, 'Code' %>
-  <%= button_to 'Generate Code' %>
-  <%= label :deal, :Offer_Code, (0...8).map { (65 + rand(26)).chr }.join %>
-<% end %>
+<div class = "container" style=" padding-top: 50px">
+  <h1>Create New Deal</h1>
+  <%= form_tag deals_path do %>
+    <%= label :deal, :Restaurant, 'Restaurant' %>
+    <%= text_field(:deal, 'Restaurant', size: 20) %>
+    <%= label :deal, :deal_title, 'Deal Title' %>
+    <%= text_field(:deal, 'Deal Title') %>
+    <%= label :deal, :Exp_Date, 'Expiration Date' %>
+    <%= text_field(:deal, 'Expiration Date') %>
+    <%= label :deal, :Description, 'Deal Description' %>
+    <%= text_field(:deal, 'Deal Description', size: 75) %>
+    <%= label :deal, :Restrictions, 'Deal Restrictions' %>
+    <%= text_field(:deal, 'Deal Restrictions', size: 75) %>
+    <%= label :deal, :Offer_Code, 'Code' %>
+    <%= button_to 'Generate Code' %>
+    <%= label :deal, :Offer_Code, (0...8).map { (65 + rand(26)).chr }.join %>
+  <% end %>
+</div>

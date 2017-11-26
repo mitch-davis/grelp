@@ -23,6 +23,13 @@ class YelpController < ApplicationController
         @businesses["businesses"] = @businesses["businesses"].sort_by{ |k| k["price"].to_s } #lowest price first
       when "priceMax"
         @businesses["businesses"] = @businesses["businesses"].sort_by{ |k| k["price"].to_s }.reverse #highest price first
+      
+      #BY NUMDEALS ------------------------------------------------------------------------
+      
+      when "numMin"
+        @businesses["businesses"] = @businesses["businesses"].sort_by{ |k| k["numDeals"].to_s } #lowest price first
+      when "numMax"
+        @businesses["businesses"] = @businesses["businesses"].sort_by{ |k| k["numDeals"].to_s }.reverse #highest price first
       end
       
     end
@@ -32,6 +39,7 @@ class YelpController < ApplicationController
     @businesses["businesses"].each do |item|
       item["ratingNum"] = item["rating"]
       item["rating"] = Yelp.genRatingHTML item["rating"] #convert rating float to HTML for star icons
+      item["numDeals"] = Deal.where(:ID => item["id"]).length
     end
   end
 end

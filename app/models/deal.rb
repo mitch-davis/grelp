@@ -16,10 +16,13 @@ class Deal < ApplicationRecord
        return (0...8).map { (65 + rand(26)).chr }.join
     end
     
-    def self.getDealsByName name
-        #we will do some matching in the database here to pull deals with the incoming name
-        #mock deal for now...
-        return [{:name => "20% off", :description => "20% off any purchase", :code => "12345", :expire => "12/5/17"}]
+    def self.getDealsByID id
+        @deals = Deal.where(:ID => id)
+        if @deals.eql? nil
+            return [{:Restaurant => "No Deals Found", :ID => '', :Deal_Title => '', :Offer_Code => '', :Exp_Date => '', :Description => '', :Restrictions => ''}]
+        else
+            return @deals
+        end
     end
-    
+
 end

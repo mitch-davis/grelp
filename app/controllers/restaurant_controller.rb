@@ -8,7 +8,7 @@ class RestaurantController < ApplicationController
             rev["rating"] = Yelp.genRatingHTML(rev["rating"])
         end
         
-        @coupons = Deal.getDealsByName @restaurant["name"]
+        @coupons = Deal.getDealsByID params["id"]
         
     end
 end
