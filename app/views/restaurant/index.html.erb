@@ -111,42 +111,48 @@
         </div>
       </div>
     </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-              <%= "Review by #{@reviews["reviews"][0]["user"]["name"]} (" %> <%= CGI.unescapeHTML(@reviews["reviews"][0]["rating"]).html_safe %> )
-          </a>
-        </h4>
+    <% if @reviews["reviews"].length > 0 %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                <%= "Review by #{@reviews["reviews"][0]["user"]["name"]} (" %> <%= CGI.unescapeHTML(@reviews["reviews"][0]["rating"]).html_safe %> )
+            </a>
+          </h4>
+        </div>
+        <div id="collapse3" class="panel-collapse collapse">
+          <div class="panel-body"><%= "#{@reviews["reviews"][0]["text"]} " %> <a href=<%=@reviews["reviews"][0]["url"]%>>More</a></div>
+        </div>
       </div>
-      <div id="collapse3" class="panel-collapse collapse">
-        <div class="panel-body"><%= "#{@reviews["reviews"][0]["text"]} " %> <a href=<%=@reviews["reviews"][0]["url"]%>>More</a></div>
+    <% end %>
+    <% if @reviews["reviews"].length > 1 %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                <%= "Review by #{@reviews["reviews"][1]["user"]["name"]} (" %> <%= CGI.unescapeHTML(@reviews["reviews"][1]["rating"]).html_safe %> )
+            </a>
+          </h4>
+        </div>
+        <div id="collapse4" class="panel-collapse collapse">
+          <div class="panel-body"><%= "#{@reviews["reviews"][1]["text"]}" %><a href=<%=@reviews["reviews"][1]["url"]%>>More</a></div>
+        </div>
       </div>
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
-              <%= "Review by #{@reviews["reviews"][1]["user"]["name"]} (" %> <%= CGI.unescapeHTML(@reviews["reviews"][1]["rating"]).html_safe %> )
-          </a>
-        </h4>
+    <% end %>
+    <% if @reviews["reviews"].length > 2 %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+                <%= "Review by #{@reviews["reviews"][2]["user"]["name"]} (" %> <%= CGI.unescapeHTML(@reviews["reviews"][2]["rating"]).html_safe %> )
+            </a>
+          </h4>
+        </div>
+        <div id="collapse5" class="panel-collapse collapse">
+          <div class="panel-body"><%= "#{@reviews["reviews"][2]["text"]}" %><a href=<%=@reviews["reviews"][2]["url"]%>>More</a></div>
+        </div>
       </div>
-      <div id="collapse4" class="panel-collapse collapse">
-        <div class="panel-body"><%= "#{@reviews["reviews"][1]["text"]}" %><a href=<%=@reviews["reviews"][1]["url"]%>>More</a></div>
-      </div>
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
-              <%= "Review by #{@reviews["reviews"][2]["user"]["name"]} (" %> <%= CGI.unescapeHTML(@reviews["reviews"][2]["rating"]).html_safe %> )
-          </a>
-        </h4>
-      </div>
-      <div id="collapse5" class="panel-collapse collapse">
-        <div class="panel-body"><%= "#{@reviews["reviews"][2]["text"]}" %><a href=<%=@reviews["reviews"][2]["url"]%>>More</a></div>
-      </div>
-    </div>
+    <% end %>
   </div> 
 </div>
     
