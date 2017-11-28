@@ -25,7 +25,11 @@ class Yelp
     end
 
     def self.near location
-       return search("food",location[:latitude], location[:longitude],true)
+       if location == nil
+         return search("food", 40, -105, true)
+       else
+         return search("food",location[:latitude], location[:longitude],true)
+       end
     end
 
     def self.attributes

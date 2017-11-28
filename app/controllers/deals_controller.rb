@@ -37,6 +37,10 @@ class DealsController < ApplicationController
   end
     
   def create
+    @nearby = Yelp.near @location
+    if @nearby == nil
+      @nearby = ["businesses" => ["id" => "Sorry, no nearby businesses were found"]]
+    end
     @deal = Deal.create!(deal_params)
     flash[:notice] = "#{@deal.Restaurant}, #{@deal.deal_title} was successfully created."
     redirect_to deals_path
@@ -51,6 +55,6 @@ class DealsController < ApplicationController
   
    def new
     # default: render 'new' template
-    
+    @nearby = Yelp.near @location
    end
 end
