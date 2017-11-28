@@ -6,8 +6,12 @@ class ApplicationController < ActionController::Base
     @location = Hash.new
 
     if (!cookies.has_key?(:latitude) || !cookies.has_key?(:longitude)) then
-        @location[:latitude] = request.location.latitude
-        @location[:longitude] = request.location.longitude
+        if (!defined?(request.location)) then
+          redirect_to :back
+        else
+          @location[:latitude] = request.location.latitude
+          @location[:longitude] = request.location.longitude
+        end
     else
         @location[:latitude] = cookies[:latitude]
         @location[:longitude] = cookies[:longitude]
