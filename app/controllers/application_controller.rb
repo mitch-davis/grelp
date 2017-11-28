@@ -1,20 +1,24 @@
+# Commenting a Core Class to Appease Reek
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  before_action :require_location
+
+  def initialize
+    super
+    @location = Hash.new
+    require_location
+  end
 
   def require_location
-    @location = Hash.new
-
-    if (!cookies.has_key?(:latitude) || !cookies.has_key?(:longitude)) then
-        if (!defined?(request.location)) then
-          redirect_to :back
-        else
-          @location[:latitude] = request.location.latitude
-          @location[:longitude] = request.location.longitude
-        end
+    if (!location = request.location)
+      redirect_to :back
     else
+      if (!cookies.has_key?(:latitude) || !cookies.has_key?(:longitude)) then
+        @location[:latitude] = location.latitude
+        @location[:longitude] = location.longitude
+      else
         @location[:latitude] = cookies[:latitude]
         @location[:longitude] = cookies[:longitude]
+      end
     end
   end
 end
