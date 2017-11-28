@@ -2,7 +2,7 @@ class RestaurantController < ApplicationController
     def index
         @test = params["id"]
         @restaurant = Yelp.getRestaurantByID params["id"]
-        @reviews = Yelp.getReviewByID "not"#params["id"]
+        @reviews = Yelp.getReviewByID params["id"]
         
         if not @reviews["reviews"].eql? nil
             @reviews["reviews"].each do |rev|
