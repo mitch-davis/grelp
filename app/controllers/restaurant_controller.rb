@@ -4,8 +4,10 @@ class RestaurantController < ApplicationController
         @restaurant = Yelp.getRestaurantByID params["id"]
         @reviews = Yelp.getReviewByID params["id"]
         
-        @reviews["reviews"].each do |rev|
-            rev["rating"] = Yelp.genRatingHTML(rev["rating"])
+        if not @reviews["reviews"].eql? nil
+            @reviews["reviews"].each do |rev|
+                rev["rating"] = Yelp.genRatingHTML(rev["rating"])
+            end
         end
         
         @coupons = Deal.getDealsByID params["id"]
