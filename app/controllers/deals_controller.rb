@@ -1,6 +1,6 @@
 class DealsController < ApplicationController
   def deal_params
-    params.require(:deal).permit(:Restaurant, :ID, :Deal_Title, :Offer_Code, :Exp_Date, :Description, :Restrictions)
+    params.require("deal").permit(:Restaurant, :ID, :Deal_Title, :Offer_Code, :Exp_Date, :Description, :Restrictions)
   end
   
   def show
@@ -37,8 +37,9 @@ class DealsController < ApplicationController
   end
     
   def create
+    #(deal_params)
     @deal = Deal.create!(deal_params)
-    flash[:notice] = "#{@deal.Restaurant}, #{@deal.deal_title} was successfully created."
+    flash[:notice] = "#{@deal.Restaurant}, #{@deal.Deal_Title} was successfully created."
     redirect_to deals_path
   end
   
@@ -51,6 +52,8 @@ class DealsController < ApplicationController
   
    def new
     # default: render 'new' template
-    
+    @nearby = Yelp.near @location
+    @id = params["id"]
+    @name = params["name"]
    end
 end
