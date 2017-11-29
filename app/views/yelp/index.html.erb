@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>GRELP</title>
+    <!-- Font Awesome Icon Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    .checked {
+        color: gold;
+    }
+    </style>
+</head>
+
+<body>
+<% if @businesses.count == 0 %>
+Error: No Businesses Found
+<% else %>
+
+<div class="container" style=" padding-top: 50px">
+    <h2>Restaurants:</h2>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-default">
+            <tr>
+                
+                <% if(params["sort"].eql? "restaurantA") %>
+                    <th><center><a href="/businesses?sort=restaurantZ">Restaurant Name</a></center></th>
+                <% else %>
+                    <th><center><a href="/businesses?sort=restaurantA">Restaurant Name</a></center></th>
+                <% end %>
+                
+                <% if(params["sort"].eql? "ratingMax") %>
+                    <th><center><a href="/businesses?sort=ratingMin">Rating</a></center></th>
+                <% else %>
+                    <th><center><a href="/businesses?sort=ratingMax">Rating</a></center></th>
+                <% end %>
+                
+                 <% if(params["sort"].eql? "priceMin") %>
+                    <th><center><a href="/businesses?sort=priceMax">Price</a></center></th>
+                <% else %>
+                    <th><center><a href="/businesses?sort=priceMin">Price</a></center></th>
+                <% end %>
+                
+                <th><center><a href="/businesses">Open?</a></center></th>
+                
+                <% if(params["sort"].eql? "numMax") %>
+                    <th><center><a href="/businesses?sort=numMin">Number of Deals</a><center></th>
+                <% else %>
+                    <th><center><a href="/businesses?sort=numMax">Number of Deals</a></center></th>
+                <% end %>
+            </tr>
+        </thead>
+        <tbody>
+            <% @businesses["businesses"].each do |item| %>
+                <tr>
+                    <td><a href="/restaurant?id=<%= item["id"] %>" ><%= item["name"]  %></a></td>
+                    <td><center> <%= CGI.unescapeHTML(item["rating"]).html_safe %></center></td>
+                    <td><center><font color="#009933"><%= item["price"] %></font></center></td>
+                    <td><center>Open Now</td></center>
+                    <td><center><%= item["numDeals"] %></center></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+<% end %>
+</body>
+</html>

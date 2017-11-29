@@ -1,179 +1,173 @@
 <head>
-  <script src="//maps.google.com/maps/api/js?key=AIzaSyCMPe5C0yTvu9AGXdeFSD-AIwo5eilQUis"></script>
-  <script src="//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js" type='text/javascript'></script>
-  <script src='//cdn.rawgit.com/printercu/google-maps-utility-library-v3-read-only/master/infobox/src/infobox_packed.js' type='text/javascript'></script>
-  <%= javascript_include_tag :application %>
+  <!-- <script src="//maps.google.com/maps/api/js?key=AIzaSyCMPe5C0yTvu9AGXdeFSD-AIwo5eilQUis" id='a'></script> -->
+  <!-- <script src="//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js" type='text/javascript'></script> -->
+  <!-- <script src='//cdn.rawgit.com/printercu/google-maps-utility-library-v3-read-only/master/infobox/src/infobox_packed.js' type='text/javascript'></script> -->
+
+  <script type="text/javascript" data-turbolinks-eval=true>
+    var mapStyle = [{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#165c64"},{"saturation":34},{"lightness":-69},{"visibility":"on"}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"hue":"#b7caaa"},{"saturation":-14},{"lightness":-18},{"visibility":"on"}]},{"featureType":"landscape.man_made","elementType":"all","stylers":[{"hue":"#cbdac1"},{"saturation":-6},{"lightness":-9},{"visibility":"on"}]},{"featureType":"road","elementType":"geometry","stylers":[{"hue":"#8d9b83"},{"saturation":-89},{"lightness":-12},{"visibility":"on"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"hue":"#d4dad0"},{"saturation":-88},{"lightness":54},{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"hue":"#bdc5b6"},{"saturation":-89},{"lightness":-3},{"visibility":"simplified"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"hue":"#bdc5b6"},{"saturation":-89},{"lightness":-26},{"visibility":"on"}]},{"featureType":"poi","elementType":"geometry","stylers":[{"hue":"#c17118"},{"saturation":61},{"lightness":-45},{"visibility":"on"}]},{"featureType":"poi.park","elementType":"all","stylers":[{"hue":"#8ba975"},{"saturation":-46},{"lightness":-28},{"visibility":"on"}]},{"featureType":"transit","elementType":"geometry","stylers":[{"hue":"#a43218"},{"saturation":74},{"lightness":-51},{"visibility":"simplified"}]},{"featureType":"administrative.province","elementType":"all","stylers":[{"hue":"#ffffff"},{"saturation":0},{"lightness":100},{"visibility":"simplified"}]},{"featureType":"administrative.neighborhood","elementType":"all","stylers":[{"hue":"#ffffff"},{"saturation":0},{"lightness":100},{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"labels","stylers":[{"hue":"#ffffff"},{"saturation":0},{"lightness":100},{"visibility":"off"}]},{"featureType":"administrative.land_parcel","elementType":"all","stylers":[{"hue":"#ffffff"},{"saturation":0},{"lightness":100},{"visibility":"off"}]},{"featureType":"administrative","elementType":"all","stylers":[{"hue":"#3a3935"},{"saturation":5},{"lightness":-57},{"visibility":"off"}]},{"featureType":"poi.medical","elementType":"geometry","stylers":[{"hue":"#cba923"},{"saturation":50},{"lightness":-46},{"visibility":"on"}]}]
+    var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+    var icons = { //Reference: http://kml4earth.appspot.com/icons.html
+      person: iconBase + 'man.png',
+      dining: iconBase + 'dining.png',
+      coffee: iconBase + 'coffee.png',
+    };
+    var searchRange = 10000; // Set how far to "search". Later, we can implement to change this by user input.
+    var handler; // Map
+    
+    //If a specifc error occurs on this page, refresh. Fix for the Google API load error and Splash bug.
+    window.onerror = function(error){
+      //console.log("Error: " +error);
+      if( (error.indexOf('google') != -1) || (error.indexOf('Script error') != -1) )
+      {
+        //console.log("Specific Error. Refreshing.");
+        window.location.reload();
+      }
+    }
+    
+    $( document ).ready(function() {
+      //Checks API Issues
+      if(handler == null)
+      {
+        handler = Gmaps.build('Google');
+      }
+      
+      // Grabs the cookie if it can
+      var lat = readCookie("latitude");
+      var lng = readCookie("longitude");
+      var type = readCookie("type");
+      
+      if(lat && lng && lat != "undefined" && lng != "undefined") //If the cookie exists, continue
+      {
+        document.getElementById("loadingText").style["display"] = "none";
+        document.getElementById("positionId").textContent="Position: " + type;
+        document.getElementById("cookieId").textContent="Cookie: True - " +lat +":" +lng;
+      
+        //Build Google Map
+        handler.buildMap(
+          {
+            provider: {
+              disableDefaultUI: true, // pass in other Google Maps API options here
+              mapTypeId: google.maps.MapTypeId.ROADMAP,
+              zoom: 15,
+              styles: mapStyle,
+              //types: ['restaurant']
+            },
+            internal: {id: 'map'}
+          },
+  
+          function(){
+            // Show User location
+            displayUserOnMap(lat, lng);
+  
+            //Show Markers
+            var markers = handler.addMarkers(buildMarkers());
+            handler.bounds.extendWith(markers);
+            handler.fitMapToBounds();
+          }
+        );
+      }
+      else //Else, wait for the cookie script to create
+      {
+        document.getElementById("loadingText").textContent="Setting Up Map. For accurate results, please let us use your location.";
+      }
+    });
+    
+    function buildMarkers()
+    {
+      var list = <%= @businesses["businesses"].to_json.html_safe %>;
+      //console.log(list);
+      var markerList = new Array();
+      list.forEach(function(item) {
+          var mark = buildMarker( item, icons["dining"], buildInfo(item) );
+          markerList.push(mark);
+      });
+      return markerList;
+    }
+    
+    function buildMarker( item , pictureURL, info)
+    {
+      // Documentation: https://developers.google.com/maps/documentation/static-maps/
+      return marker = {
+        lat: item["coordinates"]["latitude"],
+        lng: item["coordinates"]["longitude"],
+        picture: {
+          url: pictureURL, // NULL is fine for pictureURL returns default red pin
+          width: 64,
+          height: 64
+        },
+        infowindow: info
+      }
+    }
+    function displayMarkersOnMap(markers){
+      var marker = handler.addMarkers(markers);
+      handler.bounds.extendWith(marker);
+      fitMapToBounds();
+    }
+    function displayUserOnMap(lat, lng){
+      //Draw Person
+      var userPos = handler.addMarker({
+        lat: lat,
+        lng: lng,
+        picture: {
+          url: icons["person"],
+          width: 64,
+          height: 64
+        },
+      });
+      handler.bounds.extendWith(userPos);
+      handler.fitMapToBounds();
+      //Draw "Search" Range
+      drawCircle(lat, lng, searchRange, "blue", 0.5, 2, "blue", 0.075);
+    };
+    function drawCircle(latitude, longitude, radius, strokeColor, strokeOpacity, strokeWeight,
+      fillColor, fillOpacity)
+    {
+      var circle = handler.addCircle(
+        {
+          lat: latitude,
+          lng: longitude,
+          radius: radius
+        },
+        {
+          strokeColor: strokeColor,
+          strokeOpacity: strokeOpacity,
+          strokeWeight: strokeWeight,
+          fillColor: fillColor,
+          fillOpacity: fillOpacity
+        }
+      );
+    }
+    
+    function buildInfo(item)
+    { //"Panera Bread <img src='%= asset_path('panera_bread.png') %>' width='90' height='140'> Meh it's alright."),
+      var name = "<center><h2>" + item["name"] + "</h2></center>";
+      imagePath = "<p><center><img src= '" +item["image_url"] +"' width='150' height='140'></center></p>";
+      var content = "<center><table style=\"width:\">" + "<tr><td><b>Rating:</b></td><td>"+item["rating"]+" Stars</td></tr>"
+      content += "<tr><td><b>Price:</b></td><td>"+item["price"]+"</td></tr>" + "</table></center>";
+      content += "<center><h4><b> <a href=\"/restaurant?id=" +item["id"] +"\">View</a> </b></h4></center>";
+      return name + imagePath + content;
+    }
+    function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+  </script>
+
 </head>
 
 <body>
-  <div style='width: 100%; height: 100vh'>
+  <div id="informationId" data-position="false" style="display: none; padding-top: 100px">
+    <p id="positionId">Position: False</p>
+    <p id="cookieId">Cookie: False</p>
+  </div>
+  <div style='width: 100%; height: 100vh; padding-top: 50px;' class="map-section">
+    <h1 id="loadingText" style="top: 50%; left: 50%; position: absolute; transform: translateX(-50%) translateY(-50%);">Setting Up Map...</h1>
     <div id="map" style='width: 100%; height: 100%;'></div>
   </div>
 </body>
-
-
-<script>
-  
-  var handler = Gmaps.build('Google');
-  var mapStyle = [{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#165c64"},{"saturation":34},{"lightness":-69},{"visibility":"on"}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"hue":"#b7caaa"},{"saturation":-14},{"lightness":-18},{"visibility":"on"}]},{"featureType":"landscape.man_made","elementType":"all","stylers":[{"hue":"#cbdac1"},{"saturation":-6},{"lightness":-9},{"visibility":"on"}]},{"featureType":"road","elementType":"geometry","stylers":[{"hue":"#8d9b83"},{"saturation":-89},{"lightness":-12},{"visibility":"on"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"hue":"#d4dad0"},{"saturation":-88},{"lightness":54},{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"hue":"#bdc5b6"},{"saturation":-89},{"lightness":-3},{"visibility":"simplified"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"hue":"#bdc5b6"},{"saturation":-89},{"lightness":-26},{"visibility":"on"}]},{"featureType":"poi","elementType":"geometry","stylers":[{"hue":"#c17118"},{"saturation":61},{"lightness":-45},{"visibility":"on"}]},{"featureType":"poi.park","elementType":"all","stylers":[{"hue":"#8ba975"},{"saturation":-46},{"lightness":-28},{"visibility":"on"}]},{"featureType":"transit","elementType":"geometry","stylers":[{"hue":"#a43218"},{"saturation":74},{"lightness":-51},{"visibility":"simplified"}]},{"featureType":"administrative.province","elementType":"all","stylers":[{"hue":"#ffffff"},{"saturation":0},{"lightness":100},{"visibility":"simplified"}]},{"featureType":"administrative.neighborhood","elementType":"all","stylers":[{"hue":"#ffffff"},{"saturation":0},{"lightness":100},{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"labels","stylers":[{"hue":"#ffffff"},{"saturation":0},{"lightness":100},{"visibility":"off"}]},{"featureType":"administrative.land_parcel","elementType":"all","stylers":[{"hue":"#ffffff"},{"saturation":0},{"lightness":100},{"visibility":"off"}]},{"featureType":"administrative","elementType":"all","stylers":[{"hue":"#3a3935"},{"saturation":5},{"lightness":-57},{"visibility":"off"}]},{"featureType":"poi.medical","elementType":"geometry","stylers":[{"hue":"#cba923"},{"saturation":50},{"lightness":-46},{"visibility":"on"}]}]
-  var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-  var icons = { //Reference: http://kml4earth.appspot.com/icons.html
-    person: iconBase + 'man.png',
-    dining: iconBase + 'dining.png',
-    coffee: iconBase + 'coffee.png',
-  };
-  var defaultUserPos = { lat: 38.905374, lng: -104.818371 }; // Default User location inside University Village
-  var searchRange = 10000; // Set how far to "search". Later, we can implement to change this by user input.
-  var info = {
-    il_vicino: {name: "Il Vicino", content: "Il Vicino has some good pizza... and wine... lots of wine... mmm."},
-    panera_bread: {name: "Panera Bread", content: "Meh it's alright."},
-    smashburger: {name: "Smash Burger", content: "The best burgers, for the best price!"},
-    hacienda: {name: "Hacienda", content: "The best mexican food you'll find near campus!"},
-    jives: {name: "Jives", content: "Jives the most hippityhoppist coffee place in the town, breh."},
-  };
-
-  handler.buildMap(
-    {
-      provider: {
-        disableDefaultUI: true, // pass in other Google Maps API options here
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        zoom: 15,
-        styles: mapStyle,
-        //types: ['restaurant']
-      },
-      internal: {id: 'map'}
-    },
-  
-    function(){
-      // Get user location
-      if(navigator.geolocation) //If we can get their location, set their location
-      {
-        navigator.geolocation.getCurrentPosition(displayUserOnMap, displayUserOnMap);
-      }
-      else // If we can't set their location, just simulate it
-      {
-        displayUserOnMap( defaultUserPos );
-      }
-      
-      //Show Markers
-      var markers = handler.addMarkers(buildExample());
-      handler.bounds.extendWith(markers);
-      handler.fitMapToBounds(); 
-    }
-  );
-  
-  function buildExample()
-  {
-    return [
-      buildMarker( 38.904813, -104.819010, icons["dining"], buildInfo(info["il_vicino"], '<%= asset_path('il_vicino.png') %>') ),
-      buildMarker( 38.904365, -104.818479, icons["dining"], buildInfo(info["panera_bread"], '<%= asset_path('panera_bread.png') %>') ),
-      buildMarker( 38.904318, -104.818078, icons["dining"], buildInfo(info["smashburger"], '<%= asset_path('smashburger.png') %>') ),
-      buildMarker( 38.904531, -104.817729, icons["dining"], buildInfo(info["hacienda"], '<%= asset_path('hacienda.jpg') %>') ),
-      buildMarker( 38.913437, -104.814788, icons["coffee"], buildInfo(info["jives"], '<%= asset_path('jives.jpg') %>') ),
-    ];
-  }
-  
-  function buildMarker(latitude, longitude, pictureURL, info)
-  {
-    // Documentation: https://developers.google.com/maps/documentation/static-maps/
-    return marker = {
-      lat: latitude,
-      lng: longitude,
-      picture: {
-        url: pictureURL, // NULL is fine for pictureURL returns default red pin
-        width: 64,
-        height: 64
-      },
-      infowindow: info
-    }
-  }
-  function buildCustomMarker(latitude, longitude, pictureURL, info) //NOT FUNCTIONAL YET
-  {
-    return marker = {
-      lat: latitude,
-      lng: longitude,
-      picture: {
-        url: pictureURL, // NULL is fine for pictureURL returns default red pin
-        width: 64,
-        height: 64
-      },
-      custom_infowindow: info
-    }
-  }
-  
-  function displayMarkersOnMap(markers){
-    var marker = handler.addMarkers(markers); 
-    
-    handler.bounds.extendWith(marker);
-    fitMapToBounds();
-  }
-  
-  function displayUserOnMap(position){
-    var lat, lng;
-    
-    //Draw Person
-    if(position.coords){ // If we got a location
-      var userPos = handler.addMarker({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-        picture: {
-          url: icons["person"],
-          width: 64,
-          height: 64
-        },
-      });
-      
-      lat = position.coords.latitude;
-      lng = position.coords.longitude;
-    }
-    else{ //Default user to this location
-      var userPos = handler.addMarker({
-        lat: defaultUserPos.lat,
-        lng: defaultUserPos.lng,
-        picture: {
-          url: icons["person"],
-          width: 64,
-          height: 64
-        },
-      });
-      
-      lat = defaultUserPos.lat;
-      lng = defaultUserPos.lng;
-    }
-    
-    handler.bounds.extendWith(userPos);
-    handler.fitMapToBounds();
-    
-    //Draw "Search" Range
-    drawCircle(lat, lng, searchRange, "blue", 0.5, 2, "blue", 0.075);
-  };
-  
-  function drawCircle(latitude, longitude, radius, strokeColor, strokeOpacity, strokeWeight,
-    fillColor, fillOpacity)
-  {
-    var circle = handler.addCircle(
-      {
-        lat: latitude,
-        lng: longitude,
-        radius: radius
-      },
-      {
-        strokeColor: strokeColor,
-        strokeOpacity: strokeOpacity,
-        strokeWeight: strokeWeight,
-        fillColor: fillColor,
-        fillOpacity: fillOpacity
-      }
-    );
-  }
-  
-  function buildInfo(info, imagePath)
-  { //"Panera Bread <img src='%= asset_path('panera_bread.png') %>' width='90' height='140'> Meh it's alright."),
-    var name = info.name + " ";
-    imagePath = "<p><c><img src= '" +imagePath +"' width='150' height='140'></c></p>";
-    var content = " <p>" + info.content + "</p>";
-    console.log(name + imagePath + content);
-    return imagePath + content; //Removed name for now. Using logo as the name to show.
-  }
-  
-</script>
