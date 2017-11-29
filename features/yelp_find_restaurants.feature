@@ -1,13 +1,32 @@
-Feature: yelp_find_restaurants
-    As a user 
-    I need a system that is capable of finding restaurants near my location
-    So I can have a wide selection of restaurants with avaiable coupons.
+Feature: Viewer visits the restaurants page
+  In order to view the page
+  As a user
+  I want to see the yelp page
+  
+  Scenario: Viewing restaurants page
+    Given I am on the yelp page
+    Then I should see "Restaurants:"
     
-    Scenario: 
-        When I go to the business page
-        Then I should see a table of places to eat
-        
-    Scenario:
-      When I need a list of restaurants
-      Then I should see at least 1 buisness listing
+  Scenario: Viewing restaurants page
+    Given I am on the yelp page
+    Then I should see "Restaurant Name"
     
+  Scenario: Viewing restaurants page
+    Given I am on the yelp page
+    Then I should see "Rating"
+    
+  Scenario: Viewing restaurants page
+    Given I am on the yelp page
+    Then I should see "Price"
+    
+  Scenario: Viewing restaurants page
+    Given I am on the yelp page
+    Then I should see "Open?"
+    
+  Scenario: Viewing restaurants page
+    Given I am on the yelp page
+    Then I should see "Number of Deals"
+    
+  Scenario: Looking for Restaurants
+    Given I am on the yelp page
+    Then I have at least 1 restaurant listed

@@ -1,19 +1,13 @@
-When(/^I go to the business page$/)do
-    visit businesses_path
+
+Given("I am on the yelp page") do
+  visit businesses_path
 end
 
-Then(/^I should see a table of places to eat$/)do
-    @businesses = Yelp.attributes
-    expect(@businesses.length).to be >= 1
+Then("I should see {string}") do |text|
+  expect(page).to have_content(text)
 end
 
-When(/^I need a list of restaurants$/) do
-    visit businesses_path
-end
-
-Then(/^I should see at least 1 buisness listing$/) do
-    @businesses = Yelp.near request.location
-    @buisness.each do |item|
-        expect(item.length).to be >= 1
-    end
+Then("I have at least {int} restaurant listed") do |int|
+  @businesses = Yelp.near @location
+  expect(@businesses["businesses"].length).to be >= 1
 end
