@@ -9,10 +9,11 @@ class ApplicationController < ActionController::Base
   end
 
   def require_location
-    if (!defined?(request.location)) then
+    location = request.location
+
+    if (!defined?(location)) then
       flash[:notice] = "We were unable to obtain your location at this time.  Please try again later (refresh)."
     else
-      location = request.location
       if (!cookies.has_key?(:latitude) || !cookies.has_key?(:longitude)) then
         @location[:latitude] = location.latitude
         @location[:longitude] = location.longitude
