@@ -1,7 +1,8 @@
 class RestaurantController < ApplicationController
     def index
-        @test = params["id"]
+        @id = params["id"]
         @restaurant = Yelp.getRestaurantByID params["id"]
+        @name = @restaurant["name"]
         @reviews = Yelp.getReviewByID params["id"]
         
         @reviews["reviews"].each do |rev|
