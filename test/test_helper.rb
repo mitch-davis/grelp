@@ -1,3 +1,4 @@
+#comment comment comment comment comment
 # test/test_helper.rb
 require 'simplecov'
 

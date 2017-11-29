@@ -1,3 +1,4 @@
+#comment comment comment comment comment
 class CreateYelps < ActiveRecord::Migration[5.1]
   def change
     create_table :yelps do |t|
