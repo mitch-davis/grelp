@@ -13,16 +13,11 @@
 </head>
 
 <body>
-<% if @businesses.count == 0 %>
-Error: No Businesses Found
-<% else %>
-
 <div class="container" style=" padding-top: 50px">
     <h2>Restaurants:</h2>
     <table class="table table-bordered table-hover">
         <thead class="thead-default">
             <tr>
-                
                 <% if(params["sort"].eql? "restaurantA") %>
                     <th><center><a href="/businesses?sort=restaurantZ">Restaurant Name</a></center></th>
                 <% else %>
@@ -63,6 +58,6 @@ Error: No Businesses Found
         </tbody>
     </table>
 </div>
-<% end %>
 </body>
+
 </html>
