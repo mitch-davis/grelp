@@ -1,3 +1,4 @@
+#models a deal object
 class Deal < ApplicationRecord
     
     def self.get_cuisines

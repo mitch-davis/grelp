@@ -1,3 +1,4 @@
+#comment comment comment comment comment
 require "test_helper"
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
