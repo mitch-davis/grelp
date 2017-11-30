@@ -11,7 +11,7 @@ class RestaurantController < ApplicationController
             end
         end
         
-        @coupons = Deal.deal params["id"]
+        @coupons = Deal.getDealsByID params["id"]
         
     end
 end
