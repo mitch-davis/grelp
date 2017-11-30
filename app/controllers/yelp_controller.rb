@@ -1,7 +1,6 @@
 class YelpController < ApplicationController
   def index
     @businesses = Yelp.near @location
-    
     if params.key? "sort"
       case params["sort"]
       
