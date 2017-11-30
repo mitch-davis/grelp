@@ -16,7 +16,6 @@
     <%= text_field(:deal, :Description, size: 75, class: "form-control") %>
     <%= label :deal, :Restrictions, 'Deal Restrictions: ' %>
     <%= text_field(:deal, :Restrictions, size: 75, class: "form-control") %>
-    <%= label :deal, :Offer_Code, 'Offer Code: ' %>
     <%= hidden_field(:deal, :Offer_Code, :value => (0...8).map { (65 + rand(26)).chr }.join) %>
     <br>
     <%= submit_tag 'Create Deal' %>
