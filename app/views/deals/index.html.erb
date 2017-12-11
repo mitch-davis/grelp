@@ -1,0 +1,66 @@
+<head>
+
+</head>
+<body>
+  <div class = "container" style=" padding-top: 50px">
+  <h2>Deals: </h2>
+  <table class="table table-bordered table-hover" id="deal">
+    <thead class="thead-default">
+      <tr>
+        <th>
+          <% if(params["sort_by"].eql? "Offer_CodeA") then %>  
+            <%= link_to "Deal", deals_path( sort_by: "Offer_CodeZ") %>
+          <% else %>
+            <%= link_to "Deal", deals_path( sort_by: "Offer_CodeA") %>
+          <% end %>
+        </th>
+        <th>
+          <% if(params["sort_by"].eql? "RestaurantA") then %>
+            <%= link_to "Restaurant Name", deals_path( sort_by: "RestaurantZ") %>
+          <% else %>
+            <%= link_to "Restaurant Name", deals_path( sort_by: "RestaurantA") %>
+          <% end %>
+        </th>
+        <th>
+          <% if(params["sort_by"].eql? "Deal_codeA") then %>
+            <%= link_to "Deal Code", deals_path( sort_by: "Deal_codeZ") %>
+          <% else %>
+            <%= link_to "Deal Code", deals_path( sort_by: "Deal_codeA") %>
+          <% end %>
+        </th>
+        <th>
+          <% if(params["sort_by"].eql? "Exp_DateShort") then %>
+            <%= link_to "Expiration Date", deals_path( sort_by: "Exp_DateLong") %>
+          <% else %>
+            <%= link_to "Expiration Date", deals_path( sort_by: "Exp_DateShort") %>
+          <% end %>
+        </th>
+        <th>
+          <%= link_to "Deal Description", deals_path( sort_by: "Description") %>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @deals.each do |deal| %>
+        <tr>
+          <td>
+            <%= deal[:Deal_Title] %>
+          </td>
+          <td>
+            <a href="/restaurant?id=<%= deal[:ID] %>" ><%= deal[:Restaurant] %></a>
+          </td>
+          <td>
+            <%= deal[:Offer_Code] %>
+          </td>
+          <td>
+            <%= deal[:Exp_Date] %>
+          </td>
+          <td>
+            <%= link_to "More about deal", deal_path(deal) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+</body>

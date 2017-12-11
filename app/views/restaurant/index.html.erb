@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GRELP</title>
+  <!-- Font Awesome Icon Library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+  <style>
+  .checked {
+      color: gold;
+  }
+  .carousel-inner {
+    width:10%;
+    height:10%;
+    max-width:MaxSize;
+    max-height:MaxSize;
+  }
+  </style>
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div class="container" style=" padding-top: 50px">
+  <h1> <%= @restaurant["name"] %> - <a href=<%= "#{@restaurant["url"]}" %>>View in Yelp</a> </h1>
+  <h3> <%= "#{@restaurant["location"]["address1"]}, #{@restaurant["location"]["city"]}, #{@restaurant["location"]["state"]}" %> </h3>
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Coupons</a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse in">
+        <div class="panel-body">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-default">
+                    <tr>
+                        <th>Deal Name</th>
+                        <th>Deal Description</th>
+                        <th>Offer Code</th>
+                        <th>Expiration Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @coupons.each do |deal| %>
+                        <tr>
+                            <td><%= deal[:Deal_Title] %></td>
+                            <td><%= deal[:Description] %></td>
+                            <td><%= deal[:Offer_Code] %></td>
+                            <td><%= deal[:Exp_Date] %></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+            <h4>  <a href="/deals/new?id=<%= @id %>;name=<%= @name %>" class="btn btn-success btn-sm" role="button">Create New Deal for this Restaurant</a> </h4>
+        </div>
+      </div>
+    </div>
+        <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+              <%= "Photos from #{@restaurant["name"]}" %>
+          </a>
+        </h4>
+      </div>
+      <div id="collapse2" class="panel-collapse collapse">
+        <div class="panel-body">
+          <div class="container">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+              <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+              <li data-target="#myCarousel" data-slide-to="1"></li>
+              <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+        
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+              <div class="item active">
+                <center><img src=<%=@restaurant["photos"][0]%> alt="Yelp Pic 1" style="width:50%;"></center>
+              </div>
+        
+              <div class="item">
+                <center><img src=<%=@restaurant["photos"][1]%> alt="Yelp Pic 2" style="width:50%;"></center>
+              </div>
+            
+              <div class="item">
+                <center><img src=<%=@restaurant["photos"][2]%> alt="Yelp Pic 3" style="width:50%;"></center>
+              </div>
+            </div>
+        
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <span class="sr-only">Next</span>
+            </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% if not @reviews["reviews"].eql? nil %>
+      <% if @reviews["reviews"].length > 0 %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                  <%= "Review by #{@reviews["reviews"][0]["user"]["name"]} (" %> <%= CGI.unescapeHTML(@reviews["reviews"][0]["rating"]).html_safe %> )
+              </a>
+            </h4>
+          </div>
+          <div id="collapse3" class="panel-collapse collapse">
+            <div class="panel-body"><%= "#{@reviews["reviews"][0]["text"]} " %> <a href=<%=@reviews["reviews"][0]["url"]%>>More</a></div>
+          </div>
+        </div>
+      <% end %>
+      <% if @reviews["reviews"].length > 1 %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                  <%= "Review by #{@reviews["reviews"][1]["user"]["name"]} (" %> <%= CGI.unescapeHTML(@reviews["reviews"][1]["rating"]).html_safe %> )
+              </a>
+            </h4>
+          </div>
+          <div id="collapse4" class="panel-collapse collapse">
+            <div class="panel-body"><%= "#{@reviews["reviews"][1]["text"]}" %><a href=<%=@reviews["reviews"][1]["url"]%>>More</a></div>
+          </div>
+        </div>
+      <% end %>
+      <% if @reviews["reviews"].length > 2 %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+                  <%= "Review by #{@reviews["reviews"][2]["user"]["name"]} (" %> <%= CGI.unescapeHTML(@reviews["reviews"][2]["rating"]).html_safe %> )
+              </a>
+            </h4>
+          </div>
+          <div id="collapse5" class="panel-collapse collapse">
+            <div class="panel-body"><%= "#{@reviews["reviews"][2]["text"]}" %><a href=<%=@reviews["reviews"][2]["url"]%>>More</a></div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div> 
+</div>
+    
+</body>
+</html>
